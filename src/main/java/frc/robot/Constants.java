@@ -17,15 +17,17 @@ package frc.robot;
  */
 public final class Constants {
     public static final class ShooterConstants {
-        public static final int[] kEncoderPorts = new int[]{4, 5};
+        public static final int[] kEncoderPorts = new int[]{2, 3};
         public static final boolean kEncoderReversed = false;
         public static final int kEncoderCPR = 1024;
         public static final double kEncoderDistancePerPulse =
             // Distance units will be rotations
             1.0 / (double) kEncoderCPR;
 
-        public static final int kShooterMotorPort = 4;
-        public static final int kFeederMotorPort = 5;
+        public static final int kShooterMotorTopPort = 2;
+        public static final int kShooterMotorBottomPort = 3;
+
+        
         public static final double kShooterFreeRPS = 5300;
         public static final double kShooterTargetRPS = 4000;
         public static final double kShooterToleranceRPS = 50;
@@ -42,10 +44,9 @@ public final class Constants {
             // Should have value 12V at free speed...
             12.0 / kShooterFreeRPS;
 
-        public static final double kFeederSpeed = 0.5;
       }
 
       public static final class OIConstants {
-          public static final int kDriveControllerPort = 1;
+          public static final int kDriveControllerPort = 0;
       }
     }

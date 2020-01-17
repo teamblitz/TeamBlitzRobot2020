@@ -45,9 +45,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   
+   //Hey loser, button A starts the motor while button B stops the motor.
   private void configureButtonBindings() {
     new JoystickButton(m_drivController, Button.kA.value)
     .whenPressed(new InstantCommand(m_shooter::enable, m_shooter).beforeStarting(() -> System.out.println("SHOOT!!!")));
+
+    new JoystickButton(m_drivController, Button.kB.value)
+    .whenReleased(new InstantCommand(m_shooter::disable, m_shooter).beforeStarting(() -> System.out.println("STOP!!!")));
   }
 
 

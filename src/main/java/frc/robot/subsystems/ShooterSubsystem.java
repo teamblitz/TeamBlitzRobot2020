@@ -8,47 +8,32 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.Encoder;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj.controller.PIDController;
 
-public class ShooterSubsystem extends PIDSubsystem {
+public class ShooterSubsystem extends SubsystemBase {
   private final TalonSRX m_shooterMotorTop = new TalonSRX(ShooterConstants.kShooterMotorTopPort);
-  private final Encoder m_shooterEncoderTop =
-    new Encoder(ShooterConstants.kEncoderPorts[0], ShooterConstants.kEncoderPorts[1],
-      ShooterConstants.kEncoderReversed);
-  private final SimpleMotorFeedforward m_shooterFeedforward =
-    new SimpleMotorFeedforward(ShooterConstants.kSVolts,
-      ShooterConstants.kVVoltSecondsPerRotation);
-  /**
-   * Creates a new ExampleSubsystem.
-   */
+
   public ShooterSubsystem() {
-    super(new PIDController(ShooterConstants.kP, ShooterConstants.kI, ShooterConstants.kD));
-    getController().setTolerance(ShooterConstants.kShooterToleranceRPS);
-    m_shooterEncoderTop.setDistancePerPulse(ShooterConstants.kEncoderDistancePerPulse);
-    setSetpoint(ShooterConstants.kShooterTargetRPS);
-  }
+    m_shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+		//m_shooterMotorTop.enableCurrentLimit(true);
+		m_shooterMotorTop.setSensorPhase(true); //Positive velocity corresponds to green light on Talon
+		m_shooterMotorTop.setInverted(false);
+		m_shooterMotorTop.configNominalOutputForward(0, 10);
+		m_shooterMotorTop.configNominalOutputReverse(0, 10);
+		m_shooterMotorTop.configPeakOutputForward(1, 10);
+		m_shooterMotorTop.configPeakOutputReverse(-1, 10);
+		m_shooterMotorTop.configAllowableClosedloopError(0, 0, 10);
+		m_shooterMotorTop.config_kF(0, 0.0, 10);
+		m_shooterMotorTop.config_kP(0, 1.5, 10);
+		m_shooterMotorTop.config_kI(0, 0.02, 10);
+		m_shooterMotorTop.config_kD(0, -0.01, 10);
+		m_shooterMotorTop.setSelectedSensorPosition(0, 0, 10);
+		//m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(pulseWidthPeriod_EdgesPerRot, timeoutMs);
 
-  @Override
-  public void useOutput(double output, double setpoint) {
-    m_shooterMotorTop.set(ControlMode.PercentOutput, output + m_shooterFeedforward.calculate(setpoint));
-  }
-
-   @Override
-  public double getMeasurement() {
-    return m_shooterEncoderTop.getRate();
-  }
-
-  public boolean atSetpoint() {
-    return m_controller.atSetpoint();
-  }
-
-  public void stop() {
     m_shooterMotorTop.set(ControlMode.PercentOutput, 0);
   }
-
 }

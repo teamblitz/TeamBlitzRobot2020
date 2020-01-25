@@ -14,15 +14,38 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.networktables.NetworkTableEntry;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
+
+private ShuffleboardTab speedcontrols = Shuffleboard.getTab("Controls");
+
   private final TalonSRX m_shooterMotorTop = new TalonSRX(ShooterConstants.kShooterMotorTopPort);
+  private final TalonSRX m_shooterMotorBottom = new TalonSRX(ShooterConstants.kShooterMotorBottomPort);
+
+
+  private NetworkTableEntry topMotorVelocity = Shuffleboard.getTab("Controls")
+  .add("Top Motor", m_shooterMotorTop.getSelectedSensorVelocity())
+  .withWidget(BuiltInWidgets.kTextView)
+  .getEntry();  
+  
+  private NetworkTableEntry bottomMotorVelocity = Shuffleboard.getTab("Controls")
+  .add("Bottom Motor", m_shooterMotorBottom.getSelectedSensorVelocity())
+  .withWidget(BuiltInWidgets.kTextView)
+  .getEntry();
 
   public ShooterSubsystem() {
 	m_shooterMotorTop.configFactoryDefault();
 	m_shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
+
+	m_shooterMotorBottom.configFactoryDefault();
+	m_shooterMotorBottom.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
 	// Configure nominal outputs.
 	m_shooterMotorTop.configNominalOutputForward(0, 10);
@@ -30,8 +53,15 @@ public class ShooterSubsystem extends SubsystemBase {
 	m_shooterMotorTop.configPeakOutputForward(1, 10);
 	m_shooterMotorTop.configPeakOutputReverse(-1, 10);
 
+	m_shooterMotorBottom.configNominalOutputForward(0, 10);
+	m_shooterMotorBottom.configNominalOutputReverse(0, 10);
+	m_shooterMotorBottom.configPeakOutputForward(1, 10);
+	m_shooterMotorBottom.configPeakOutputReverse(-1, 10);
+
 	// Configure neutral mode.
 	m_shooterMotorTop.setNeutralMode(NeutralMode.Brake);
+	m_shooterMotorBottom.setNeutralMode(NeutralMode.Brake);
+
 
 	// Configure Velocity closed loop gains in slot1.
 	m_shooterMotorTop.config_kF(0, 1023.0/7200.0, 10);
@@ -39,7 +69,14 @@ public class ShooterSubsystem extends SubsystemBase {
 	m_shooterMotorTop.config_kI(0, 0.001, 10);
 	m_shooterMotorTop.config_kD(0, 20, 10);
 
+	m_shooterMotorBottom.config_kF(0, 1023.0/7200.0, 10);
+	m_shooterMotorBottom.config_kP(0, 0.25, 10);
+	m_shooterMotorBottom.config_kI(0, 0.001, 10);
+	m_shooterMotorBottom.config_kD(0, 20, 10);
+
 	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(20, 10);
+	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
+
 
 	// m_shooterMotorTop.configSelectedFeedbackCoefficient(1, 0, 10);
 	// m_shooterMotorTop.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 10);
@@ -57,16 +94,21 @@ public class ShooterSubsystem extends SubsystemBase {
 	// m_shooterMotorTop.setSelectedSensorPosition(0, 0, 10);
 	//m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(pulseWidthPeriod_EdgesPerRot, timeoutMs);
 
-    m_shooterMotorTop.set(ControlMode.Velocity, 0);
+	m_shooterMotorTop.set(ControlMode.Velocity, 0);
+	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
   }
 
   public void shoot() {
 	System.out.println("ShooterSubsytem::shoot");
-	m_shooterMotorTop.set(ControlMode.Velocity, 1.0 * 80.0);
+	m_shooterMotorTop.set(ControlMode.Velocity, 1.0 * topMotorVelocity.getDouble(1.0));
+	m_shooterMotorBottom.set(ControlMode.Velocity, 1.0 * bottomMotorVelocity.getDouble(1.0));
   }
 
   public void stop() {
 	System.out.println("ShooterSubsystem::stop");
 	m_shooterMotorTop.set(ControlMode.Velocity, 0.0);
+	m_shooterMotorBottom.set(ControlMode.Velocity, 0.0);
   }
 }
+
+	

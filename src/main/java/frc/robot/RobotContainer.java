@@ -47,11 +47,11 @@ public class RobotContainer {
   
    //Hey loser, button A starts the motor while button B stops the motor.
   private void configureButtonBindings() {
-    new JoystickButton(m_drivController, Button.kA.value)
-    .whenPressed(new InstantCommand(m_shooter::enable, m_shooter).beforeStarting(() -> System.out.println("SHOOT!!!")));
+     new JoystickButton(m_drivController, Button.kA.value)
+    .whenPressed(new InstantCommand(m_shooter::shoot, m_shooter).beforeStarting(() -> System.out.println("Xbox 'A' Pressed")));
 
-    new JoystickButton(m_drivController, Button.kB.value)
-    .whenReleased(new InstantCommand(m_shooter::disable, m_shooter).beforeStarting(() -> System.out.println("STOP!!!")));
+    new JoystickButton(m_drivController, Button.kA.value)
+    .whenReleased(new InstantCommand(m_shooter::stop, m_shooter).beforeStarting(() -> System.out.println("Xbox 'B' Pressed")));
   }
 
 
@@ -65,3 +65,4 @@ public class RobotContainer {
     return null;
   }
 }
+

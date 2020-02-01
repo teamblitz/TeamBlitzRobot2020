@@ -27,7 +27,7 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 
 	private final VictorSPX m_Motor = new VictorSPX(ControlPanelControllerConstants.kMotorPort);
 
-	private NetworkTableEntry motorVelocity = Shuffleboard.getTab("Controls")
+	private NetworkTableEntry motorVelocity = Shuffleboard.getTab("Control Panel")
 		.add("Controller", m_Motor.getSelectedSensorVelocity())
 		.withWidget(BuiltInWidgets.kTextView)
 		.getEntry();  
@@ -53,17 +53,17 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 
 		m_Motor.configPulseWidthPeriod_EdgesPerRot(20, 10);
 
-		m_Motor.set(ControlMode.Velocity, 0);
+		m_Motor.set(ControlMode.PercentOutput, 0);
 	}
 
 	public void spin() {
 		System.out.println("ControlPanelControllerSubsytem::spin");
-		m_Motor.set(ControlMode.Velocity, 1.0 * motorVelocity.getDouble(1.0));
+		m_Motor.set(ControlMode.PercentOutput, 1.0 * motorVelocity.getDouble(1.0));
 	}
 
 	public void stop() {
 		System.out.println("ControlPanelControllerSubsytem::stop");
-		m_Motor.set(ControlMode.Velocity, 0.0);
+		m_Motor.set(ControlMode.PercentOutput, 0.0);
 	}
 }
 

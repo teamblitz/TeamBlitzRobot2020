@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class DriveSubsystem extends SubsystemBase {
 
   // TODO: define the motor controllers
-  private final DifferentialDrive m_drive = new DifferentialDrive(null, null);
+  // private final DifferentialDrive m_drive = new DifferentialDrive(null, null);
   /**
    * Creates a new DriveSubsystem.
    */
@@ -34,6 +34,6 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void arcadeDrive(double fwd, double rot) {
     System.out.println("drive");
-    m_drive.arcadeDrive(fwd, rot);
+    // m_drive.arcadeDrive(fwd, rot);
   }
 }

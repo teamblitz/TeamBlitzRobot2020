@@ -76,24 +76,11 @@ private ShuffleboardTab speedcontrols = Shuffleboard.getTab("Controls");
 	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(20, 10);
 	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
 
-	// m_shooterMotorTop.configSelectedFeedbackCoefficient(1, 0, 10);
-	// m_shooterMotorTop.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 10);
-	// m_shooterMotorTop.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, 10);
-	// m_shooterMotorTop.configNeutralDeadband(0.001, 10);
-	// m_shooterMotorTop.setSensorPhase(true);
-	// m_shooterMotorTop.config_IntegralZone(0, 300, 10);
-	// m_shooterMotorTop.configClosedLoopPeakOutput(0, 0.75, 10);
-	// m_shooterMotorTop.configAllowableClosedloopError(0, 0, 10);
-
-	// m_shooterMotorTop.enableCurrentLimit(true);
-	// m_shooterMotorTop.setSensorPhase(true); //Positive velocity corresponds to green light on Talon
-	// m_shooterMotorTop.setInverted(false);
-	// m_shooterMotorTop.configAllowableClosedloopError(0, 0, 10);
-	// m_shooterMotorTop.setSelectedSensorPosition(0, 0, 10);
-	//m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(pulseWidthPeriod_EdgesPerRot, timeoutMs);
+	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(80, 10);
+	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(80, 10);
 
 	m_shooterMotorTop.set(ControlMode.Velocity, 0);
-	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
+	m_shooterMotorBottom.set(ControlMode.Velocity, 0);
   }
 
   public void shoot() {
@@ -110,16 +97,16 @@ private ShuffleboardTab speedcontrols = Shuffleboard.getTab("Controls");
 	-This is to make sure someone stupid, aka Sean, will not set the motors to a stupidly high or low value.
 	*/
 
-	if (topMotorVelocity.getDouble(1.0) > 800) {
-		m_shooterMotorTop.set(ControlMode.Velocity, 800);
+	if (topMotorVelocity.getDouble(1.0) > 2400) {
+		m_shooterMotorTop.set(ControlMode.Velocity, 2400);
 	} else if (topMotorVelocity.getDouble(1.0) < 0) {
 		m_shooterMotorTop.set(ControlMode.Velocity, 0);
 	} else {
 		m_shooterMotorTop.set(ControlMode.Velocity, 1.0 * topMotorVelocity.getDouble(1.0));
 	}
 
-	if (bottomMotorVelocity.getDouble(1.0) > 50) {
-		m_shooterMotorBottom.set(ControlMode.Velocity, 50);
+	if (bottomMotorVelocity.getDouble(1.0) > 2400) {
+		m_shooterMotorBottom.set(ControlMode.Velocity, 2400);
 	} else if (bottomMotorVelocity.getDouble(1.0) < 0) {
 		m_shooterMotorBottom.set(ControlMode.Velocity, 0);
 	} else {

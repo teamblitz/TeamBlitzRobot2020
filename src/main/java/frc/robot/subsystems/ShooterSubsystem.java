@@ -38,6 +38,7 @@ private ShuffleboardTab speedcontrols = Shuffleboard.getTab("Controls");
   .withWidget(BuiltInWidgets.kTextView)
   .getEntry();
 
+
   public ShooterSubsystem() {
 	m_shooterMotorTop.configFactoryDefault();
 	m_shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
@@ -75,7 +76,6 @@ private ShuffleboardTab speedcontrols = Shuffleboard.getTab("Controls");
 	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(20, 10);
 	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
 
-
 	// m_shooterMotorTop.configSelectedFeedbackCoefficient(1, 0, 10);
 	// m_shooterMotorTop.setStatusFramePeriod(StatusFrame.Status_12_Feedback1, 20, 10);
 	// m_shooterMotorTop.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20, 10);
@@ -98,10 +98,35 @@ private ShuffleboardTab speedcontrols = Shuffleboard.getTab("Controls");
 
   public void shoot() {
 	System.out.println("ShooterSubsytem::shoot");
-	m_shooterMotorTop.set(ControlMode.Velocity, 1.0 * topMotorVelocity.getDouble(1.0));
-	m_shooterMotorBottom.set(ControlMode.Velocity, 1.0 * bottomMotorVelocity.getDouble(1.0));
-  }
 
+	/*
+	The if/else statement sets the minimum and maximum values (speed) of the motors.
+	-800 is the default maximum value
+	-0 is the default minimum value
+	-The first if and else statement checks if the value is greater than 800. If it is, it will automatically
+	set the motor velocity to 800 (or whatever value is in the parameters).
+	-The second statement (else if/else) checks if the value is less than 0. If it is, it will automatically
+	set the motor velocity to 0 (or whatever value is in the parameters).
+	-This is to make sure someone stupid, aka Sean, will not set the motors to a stupidly high or low value.
+	*/
+
+	if (topMotorVelocity.getDouble(1.0) > 800) {
+		m_shooterMotorTop.set(ControlMode.Velocity, 800);
+	} else if (topMotorVelocity.getDouble(1.0) < 0) {
+		m_shooterMotorTop.set(ControlMode.Velocity, 0);
+	} else {
+		m_shooterMotorTop.set(ControlMode.Velocity, 1.0 * topMotorVelocity.getDouble(1.0));
+	}
+
+	if (bottomMotorVelocity.getDouble(1.0) > 50) {
+		m_shooterMotorBottom.set(ControlMode.Velocity, 50);
+	} else if (bottomMotorVelocity.getDouble(1.0) < 0) {
+		m_shooterMotorBottom.set(ControlMode.Velocity, 0);
+	} else {
+		m_shooterMotorBottom.set(ControlMode.Velocity, 1.0 * bottomMotorVelocity.getDouble(1.0));
+	}
+
+  }
   public void stop() {
 	System.out.println("ShooterSubsystem::stop");
 	m_shooterMotorTop.set(ControlMode.Velocity, 0.0);

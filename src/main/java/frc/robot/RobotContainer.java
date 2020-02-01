@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ControlPanelControllerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -28,6 +30,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final ControlPanelControllerSubsystem m_cpController = new ControlPanelControllerSubsystem();
+  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
   // The driver's controller.
   private final XboxController m_driveController = new XboxController(OIConstants.kDriveControllerPort);
@@ -38,6 +41,13 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    m_robotDrive.setDefaultCommand(
+      // A split-stick arcade command, with forward/backward controlled by the left
+      // hand, and turning controlled by the right.
+      new RunCommand(() -> m_robotDrive
+          .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
+                       m_driveController.getX(GenericHID.Hand.kRight)), m_robotDrive));
   }
 
   /**

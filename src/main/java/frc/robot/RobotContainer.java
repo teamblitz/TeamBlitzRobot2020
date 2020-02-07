@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.ControlPanelControllerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,6 +32,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
   private final ControlPanelControllerSubsystem m_cpController = new ControlPanelControllerSubsystem();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ColorSensorSubsystem m_colorSensor = new ColorSensorSubsystem();
 
   // The driver's controller.
   private final XboxController m_driveController = new XboxController(OIConstants.kDriveControllerPort);
@@ -42,9 +44,12 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+    // TODO: Once the DriveSubsystem motor controllers are defined 
+    // then uncomment this to enable the drive
+
     // m_robotDrive.setDefaultCommand(
-      // A split-stick arcade command, with forward/backward controlled by the left
-      // hand, and turning controlled by the right.
+    // A split-stick arcade command, with forward/backward controlled by the left
+    // hand, and turning controlled by the right.
     //  new RunCommand(() -> m_robotDrive
     //      .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
     //                   m_driveController.getX(GenericHID.Hand.kRight)), m_robotDrive));

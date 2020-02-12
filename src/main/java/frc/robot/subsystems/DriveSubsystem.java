@@ -68,8 +68,8 @@ public class DriveSubsystem extends SubsystemBase {
    * @param fwd the commanded forward movement
    * @param rot the commanded rotation
    */
-  public void arcadeDrive(double fwd, double rot) {
+  public void arcadeDrive(final double fwd, final double rot) {
     System.out.println("drive");
-    // m_drive.arcadeDrive(fwd, rot);
+    m_drive.arcadeDrive(fwd, rot);
   }
 }

@@ -44,15 +44,10 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // TODO: Once the DriveSubsystem motor controllers are defined 
-    // then uncomment this to enable the drive
-
-    // m_robotDrive.setDefaultCommand(
-    // A split-stick arcade command, with forward/backward controlled by the left
-    // hand, and turning controlled by the right.
-    //  new RunCommand(() -> m_robotDrive
-    //      .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
-    //                   m_driveController.getX(GenericHID.Hand.kRight)), m_robotDrive));
+    m_robotDrive.setDefaultCommand(
+      new RunCommand(() -> m_robotDrive
+        .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
+                     m_driveController.getX(GenericHID.Hand.kRight)), m_robotDrive));
   }
 
   /**

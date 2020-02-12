@@ -9,16 +9,52 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class DriveSubsystem extends SubsystemBase {
 
-  // TODO: define the motor controllers
-  // private final DifferentialDrive m_drive = new DifferentialDrive(null, null);
+  /* Master Talons */
+  private final WPI_TalonFX m_leftMotor = new WPI_TalonFX(Constants.DriveConstants.kLeftMotorPort);
+  private final WPI_TalonFX m_rightMotor = new WPI_TalonFX(Constants.DriveConstants.kRightMotorPort);
+  /* Slave Talons */
+  private final WPI_TalonFX m_leftSlave = new WPI_TalonFX(Constants.DriveConstants.kLeftSlavePort);
+  private final WPI_TalonFX m_rightSlave = new WPI_TalonFX(Constants.DriveConstants.kRightSlavePort);
+  
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
   /**
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
+    /* Factory Default all hardware to prevent unexpected behaviour */
+    m_leftMotor.configFactoryDefault();
+    m_rightMotor.configFactoryDefault();
+    m_leftSlave.configFactoryDefault();
+    m_rightSlave.configFactoryDefault();
 
+    /**
+    * Take our extra motor controllers and have them
+    * follow the Talons updated in arcadeDrive 
+    */
+    m_leftSlave.follow(m_leftMotor);
+    m_rightSlave.follow(m_rightMotor);
+
+    /**
+    * Drive robot forward and make sure all motors spin the correct way.
+    * Toggle booleans accordingly.... 
+    */
+    m_leftMotor.setInverted(false); // <<<<<< Adjust this until robot drives forward when stick is forward
+    m_rightMotor.setInverted(true); // <<<<<< Adjust this until robot drives forward when stick is forward
+    m_leftSlave.setInverted(InvertType.FollowMaster);
+    m_rightSlave.setInverted(InvertType.FollowMaster);
+
+    /* diff drive assumes (by default) that 
+      right side must be negative to move forward.
+      Change to 'false' so positive/green-LEDs moves robot forward  
+    */
+    m_drive.setRightSideInverted(false); // do not change this
   }
 
   @Override

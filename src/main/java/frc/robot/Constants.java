@@ -68,8 +68,12 @@ public final class Constants {
         public static final double kVVoltSecondsPerRotation = 12.0 / kFreeRPS;      // Should have value 12V at free speed.
     }
 
-    public static final class DriveConstants {        
-    }
+    public static final class DriveConstants {     
+        public static final int kLeftMotorPort = 6;
+        public static final int kRightMotorPort = 7;
+        public static final int kLeftSlavePort = 8;
+        public static final int kRightSlavePort = 9;
+    } 
 
     public static final class OIConstants {
           public static final int kDriveControllerPort = 0;

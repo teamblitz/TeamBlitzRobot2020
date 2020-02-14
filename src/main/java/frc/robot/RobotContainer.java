@@ -30,9 +30,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ShooterSubsystem m_shooter = new ShooterSubsystem();
-  private final ControlPanelControllerSubsystem m_cpController = new ControlPanelControllerSubsystem();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ColorSensorSubsystem m_colorSensor = new ColorSensorSubsystem();
+  private final ControlPanelControllerSubsystem m_cpController = new ControlPanelControllerSubsystem(m_colorSensor);
 
   // The driver's controller.
   private final XboxController m_driveController = new XboxController(OIConstants.kDriveControllerPort);

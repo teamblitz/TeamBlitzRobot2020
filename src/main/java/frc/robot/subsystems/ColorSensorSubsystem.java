@@ -67,6 +67,10 @@ public class ColorSensorSubsystem extends SubsystemBase {
     m_colorMatcher.addColorMatch(kYellowTarget);    
   }
 
+  public int getRotations() {
+    return rotations;
+  }
+
   public void periodic() {
    /**
      * The method GetColor() returns a normalized color value from the sensor and can be

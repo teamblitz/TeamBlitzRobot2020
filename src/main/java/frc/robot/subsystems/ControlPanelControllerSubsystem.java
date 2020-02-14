@@ -31,7 +31,7 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 		.add("Controller", m_Motor.getSelectedSensorVelocity())
 		.withWidget(BuiltInWidgets.kTextView)
 		.getEntry();  
-	
+
 	public ControlPanelControllerSubsystem() {
 		m_Motor.configFactoryDefault();
 		m_Motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);

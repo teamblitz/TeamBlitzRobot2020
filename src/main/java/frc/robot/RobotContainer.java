@@ -62,7 +62,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-    //Hey loser, button A starts the motor while button B stops the motor.
+    //Hey Loser, button A starts the motor while button B stops the motor.
   private void configureButtonBindings() {
     
     // ***** SHOOTER *****
@@ -71,6 +71,7 @@ public class RobotContainer {
 
     new JoystickButton(m_driveController, Button.kA.value)
       .whenReleased(new InstantCommand(m_shooter::stop, m_shooter).beforeStarting(() -> System.out.println("Xbox 'A' Released")));
+
 
     // ***** CONTROL PANEL *****
     new JoystickButton(m_driveController, Button.kX.value)

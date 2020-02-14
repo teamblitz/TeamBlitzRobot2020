@@ -23,6 +23,7 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
 
 public class ColorSensorSubsystem extends SubsystemBase {
+
    /**
    * Change the I2C port below to match the connection of your color sensor
    */
@@ -54,6 +55,11 @@ public class ColorSensorSubsystem extends SubsystemBase {
   private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
+  private String colorString;
+  private String colorStringPrevious;
+  private int colorCounter = 0;
+  private int rotations = 0;
+
   public ColorSensorSubsystem() {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
@@ -77,7 +83,6 @@ public class ColorSensorSubsystem extends SubsystemBase {
     /**
      * Run the color match algorithm on our detected color
      */
-    String colorString;
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
@@ -92,6 +97,18 @@ public class ColorSensorSubsystem extends SubsystemBase {
       colorString = "Unknown";
     }
 
+    if (colorString != colorStringPrevious) {
+      if (colorString == "Red") {
+      colorCounter++;
+      }
+      colorStringPrevious = colorString;
+    }
+
+    if (colorCounter == 2) {
+      rotations++;
+      colorCounter = 0;
+    }
+
     /**
      * Open Smart Dashboard or Shuffleboard to see the color detected by the 
      * sensor.
@@ -101,5 +118,7 @@ public class ColorSensorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
+    SmartDashboard.putNumber("Color Counter Red", colorCounter);
+    SmartDashboard.putNumber("Rotations", rotations);
   }
 }

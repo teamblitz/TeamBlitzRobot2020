@@ -32,6 +32,11 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 		.withWidget(BuiltInWidgets.kTextView)
 		.getEntry();  
 
+	// private NetworkTableEntry rotations = Shuffleboard.getTab("Control Panel")
+	// 	.add("Rotations", rotations.getValue())
+	// 	.withWidget(BuiltInWidgets.kTextView)
+	// 	.getEntry();  
+	
 	public ControlPanelControllerSubsystem() {
 		m_Motor.configFactoryDefault();
 		m_Motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
@@ -57,14 +62,14 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 	}
 
 	public void spin() {
+
 		System.out.println("ControlPanelControllerSubsytem::spin");
 		m_Motor.set(ControlMode.PercentOutput, 1.0 * motorVelocity.getDouble(1.0));
-	}
+		}
 
-	public void stop() {
+		public void stop() {
 		System.out.println("ControlPanelControllerSubsytem::stop");
 		m_Motor.set(ControlMode.PercentOutput, 0.0);
 	}
 }
-
 	

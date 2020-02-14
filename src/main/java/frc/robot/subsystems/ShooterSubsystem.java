@@ -30,14 +30,17 @@ private ShuffleboardTab speedcontrols = Shuffleboard.getTab("Controls");
 
   private NetworkTableEntry topMotorVelocity = Shuffleboard.getTab("Controls")
   .add("Top Motor", m_shooterMotorTop.getSelectedSensorVelocity())
-  .withWidget(BuiltInWidgets.kTextView)
+	.withWidget(BuiltInWidgets.kTextView)
+	.withPosition(0, 0)
+	.withSize(2, 1)
   .getEntry();  
   
   private NetworkTableEntry bottomMotorVelocity = Shuffleboard.getTab("Controls")
   .add("Bottom Motor", m_shooterMotorBottom.getSelectedSensorVelocity())
-  .withWidget(BuiltInWidgets.kTextView)
-  .getEntry();
-
+	.withWidget(BuiltInWidgets.kTextView)
+	.withPosition(2, 0)
+	.withSize(2, 1)
+	.getEntry();
 
   public ShooterSubsystem() {
 	m_shooterMotorTop.configFactoryDefault();

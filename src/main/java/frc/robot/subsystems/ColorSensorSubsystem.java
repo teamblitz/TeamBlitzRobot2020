@@ -23,7 +23,6 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
 
 public class ColorSensorSubsystem extends SubsystemBase {
-
    /**
    * Change the I2C port below to match the connection of your color sensor
    */
@@ -57,8 +56,9 @@ public class ColorSensorSubsystem extends SubsystemBase {
 
   private String colorString;
   private String colorStringPrevious;
-  private int colorCounter = 0;
   private int rotations = 0;
+  private int colorCounter = 0;
+  private boolean spinUntillColor = false;
 
   public ColorSensorSubsystem() {
     m_colorMatcher.addColorMatch(kBlueTarget);
@@ -97,9 +97,11 @@ public class ColorSensorSubsystem extends SubsystemBase {
       colorString = "Unknown";
     }
 
+    //Revolution Counter
     if (colorString != colorStringPrevious) {
       if (colorString == "Red") {
       colorCounter++;
+      spinUntillColor = true;
       }
       colorStringPrevious = colorString;
     }
@@ -107,6 +109,13 @@ public class ColorSensorSubsystem extends SubsystemBase {
     if (colorCounter == 2) {
       rotations++;
       colorCounter = 0;
+    }
+
+    //Spin to color
+    if (colorString != colorStringPrevious) {
+      if (colorString == "Red") {
+        spinUntillColor = false;
+      }
     }
 
     /**
@@ -120,5 +129,6 @@ public class ColorSensorSubsystem extends SubsystemBase {
     SmartDashboard.putString("Detected Color", colorString);
     SmartDashboard.putNumber("Color Counter Red", colorCounter);
     SmartDashboard.putNumber("Rotations", rotations);
+    SmartDashboard.putBoolean("Has red passed", spinUntillColor);
   }
 }

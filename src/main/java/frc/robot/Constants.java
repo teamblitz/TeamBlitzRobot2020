@@ -70,8 +70,8 @@ public final class Constants {
 
     public static final class DriveConstants {     
         public static final int kLeftMotorPort = 6;
-        public static final int kRightMotorPort = 7;
-        public static final int kLeftSlavePort = 8;
+        public static final int kRightMotorPort = 8;
+        public static final int kLeftSlavePort = 7;
         public static final int kRightSlavePort = 9;
     } 
 

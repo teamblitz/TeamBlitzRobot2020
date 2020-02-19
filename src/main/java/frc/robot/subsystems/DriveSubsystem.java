@@ -50,6 +50,12 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftSlave.setInverted(InvertType.FollowMaster);
     m_rightSlave.setInverted(InvertType.FollowMaster);
 
+    //Configure neutral mode.
+    m_leftMotor.setNeutralMode(NeutralMode.Brake);
+    m_rightMotor.setNeutralMode(NeutralMode.Brake);
+    m_leftSlave.setNeutralMode(NeutralMode.Brake);
+    m_rightSlave.setNeutralMode(NeutralMode.Brake);
+
     /* diff drive assumes (by default) that 
       right side must be negative to move forward.
       Change to 'false' so positive/green-LEDs moves robot forward  

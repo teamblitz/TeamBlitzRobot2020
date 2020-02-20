@@ -30,9 +30,15 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 	private NetworkTableEntry motorVelocity = Shuffleboard.getTab("Control Panel")
 		.add("Controller", m_Motor.getSelectedSensorVelocity())
 		.withWidget(BuiltInWidgets.kTextView)
-		.getEntry();  
+		.getEntry(); 
 
 	private ColorSensorSubsystem m_colorSensor;
+
+	/*private NetworkTableEntry selectTheColor = Shuffleboard.getTab("Control Panel")
+		.add("Which Color", m_colorSensor.getColorSelector())
+		.withWidget(BuiltInWidgets.kTextView)
+		.getEntry();
+*/
 
 	public ControlPanelControllerSubsystem(ColorSensorSubsystem colorSensor) {
 		m_colorSensor = colorSensor;
@@ -71,7 +77,6 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 	}
 
 		public void stop() {
-		System.out.println("ControlPanelControllerSubsytem::stop");
 		m_Motor.set(ControlMode.PercentOutput, 0.0);
 	}
 }

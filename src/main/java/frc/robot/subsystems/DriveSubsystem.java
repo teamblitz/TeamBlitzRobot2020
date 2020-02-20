@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -34,6 +35,11 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftSlave.configFactoryDefault();
     m_rightSlave.configFactoryDefault();
 
+    m_leftMotor.setNeutralMode(NeutralMode.Brake);
+    m_rightMotor.setNeutralMode(NeutralMode.Brake);
+    m_leftSlave.setNeutralMode(NeutralMode.Brake);
+    m_rightSlave.setNeutralMode(NeutralMode.Brake);
+
     /**
     * Take our extra motor controllers and have them
     * follow the Talons updated in arcadeDrive 
@@ -49,12 +55,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightMotor.setInverted(true); // <<<<<< Adjust this until robot drives forward when stick is forward
     m_leftSlave.setInverted(InvertType.FollowMaster);
     m_rightSlave.setInverted(InvertType.FollowMaster);
-
-    //Configure neutral mode.
-    m_leftMotor.setNeutralMode(NeutralMode.Brake);
-    m_rightMotor.setNeutralMode(NeutralMode.Brake);
-    m_leftSlave.setNeutralMode(NeutralMode.Brake);
-    m_rightSlave.setNeutralMode(NeutralMode.Brake);
 
     /* diff drive assumes (by default) that 
       right side must be negative to move forward.

@@ -59,16 +59,32 @@ public class ColorSensorSubsystem extends SubsystemBase {
   private int rotations = 0;
   private int colorCounter = 0;
   private boolean spinUntillColor = false;
+  private int colorSelector = 2;
+  private String colorController = "Red";
+  private boolean resetRotations = false;
+  private NetworkTableEntry resetTheRotations;
 
   public ColorSensorSubsystem() {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget);    
+    m_colorMatcher.addColorMatch(kYellowTarget);   
+    resetTheRotations = Shuffleboard.getTab("Control Panel")
+  .add("Reset Rotations", false)
+  .withWidget(BuiltInWidgets.kToggleSwitch)
+  .getEntry();
   }
 
   public int getRotations() {
     return rotations;
+  }
+
+  /*public int getColorSelector() {
+    return colorSelector;
+  }
+  */
+  public boolean getResetRotations() {
+    return resetRotations;
   }
 
   public void periodic() {
@@ -101,13 +117,27 @@ public class ColorSensorSubsystem extends SubsystemBase {
       colorString = "Unknown";
     }
 
+    if (colorSelector == 1) {
+      colorController = "Red";
+    } else if (colorSelector == 2) {
+      colorController = "Blue";
+    } else if (colorSelector == 3) {
+      colorController = "Green";
+    } else if (colorSelector == 4) {
+      colorController = "Yellow";
+    } else {
+      colorController = "Unknown";
+    }
+
     //Revolution Counter
     if (colorString != colorStringPrevious) {
-      if (colorString == "Red") {
-      colorCounter++;
-      spinUntillColor = true;
-      }
+      if (colorString != "Unknown") {
+        if (colorString == colorController) {
+        colorCounter++;
+        spinUntillColor = true;
+        }
       colorStringPrevious = colorString;
+      }
     }
 
     if (colorCounter == 2) {
@@ -117,9 +147,15 @@ public class ColorSensorSubsystem extends SubsystemBase {
 
     //Spin to color
     if (colorString != colorStringPrevious) {
-      if (colorString == "Red") {
+      if (colorString == colorController) {
         spinUntillColor = false;
       }
+    }
+
+    if (resetTheRotations.getBoolean(false) == true) {
+      rotations = 0;
+      resetRotations = false;
+      resetTheRotations.setBoolean(false);
     }
 
     /**
@@ -131,8 +167,8 @@ public class ColorSensorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Blue", detectedColor.blue);
     SmartDashboard.putNumber("Confidence", match.confidence);
     SmartDashboard.putString("Detected Color", colorString);
-    SmartDashboard.putNumber("Color Counter Red", colorCounter);
+    SmartDashboard.putNumber("Color Counter", colorCounter);
     SmartDashboard.putNumber("Rotations", rotations);
-    SmartDashboard.putBoolean("Has red passed", spinUntillColor);
+    SmartDashboard.putBoolean("Has color passed", spinUntillColor);
   }
 }

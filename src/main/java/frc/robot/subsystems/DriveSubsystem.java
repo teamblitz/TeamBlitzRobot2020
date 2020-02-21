@@ -56,6 +56,10 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftSlave.setInverted(InvertType.FollowMaster);
     m_rightSlave.setInverted(InvertType.FollowMaster);
 
+    //Make the motors ramp up slowly
+    m_leftMotor.configOpenloopRamp(1, 10);
+    m_rightMotor.configOpenloopRamp(1, 10);
+    
     /* diff drive assumes (by default) that 
       right side must be negative to move forward.
       Change to 'false' so positive/green-LEDs moves robot forward  
@@ -75,7 +79,12 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rot the commanded rotation
    */
   public void arcadeDrive(final double fwd, final double rot) {
-    System.out.println("drive");
+    System.out.println("arcadeDrive");
     m_drive.arcadeDrive(fwd, rot);
+  }
+
+  public void tankDrive(final double leftSpeed, final double rightSpeed) {
+    System.out.println("tankDrive");
+    m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 }

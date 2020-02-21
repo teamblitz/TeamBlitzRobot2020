@@ -15,6 +15,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.ControlPanelControllerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+import frc.robot.subsystems.FeederWheelsSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -33,6 +35,8 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ColorSensorSubsystem m_colorSensor = new ColorSensorSubsystem();
   private final ControlPanelControllerSubsystem m_cpController = new ControlPanelControllerSubsystem(m_colorSensor);
+  private final FeederSubsystem m_intakeArm = new FeederSubsystem();
+  private final FeederWheelsSubsystem m_intakeRoller = new FeederWheelsSubsystem();
 
   // The driver's controller.
   private final XboxController m_driveController = new XboxController(OIConstants.kDriveControllerPort);

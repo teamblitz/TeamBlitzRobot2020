@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
@@ -40,7 +41,7 @@ public class RobotContainer {
 
   // The driver's controller.
   private final XboxController m_driveController = new XboxController(OIConstants.kDriveControllerPort);
-
+  private final Joystick m_auxiliaryController = new Joystick(OIConstants.kDriveControllerPort);
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -48,11 +49,15 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-   m_robotDrive.setDefaultCommand(
-      new RunCommand(() -> m_robotDrive
-        .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
-                     m_driveController.getX(GenericHID.Hand.kRight)), m_robotDrive));
+  //  m_robotDrive.setDefaultCommand(
+  //     new RunCommand(() -> m_robotDrive
+  //       .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
+  //                    m_driveController.getX(GenericHID.Hand.kRight)), m_robotDrive));
                      
+      m_robotDrive.setDefaultCommand(
+      new RunCommand(() -> m_robotDrive
+        .tankDrive(m_driveController.getY(GenericHID.Hand.kLeft),
+                   m_driveController.getY(GenericHID.Hand.kRight)), m_robotDrive));
   }
 
   /**
@@ -62,25 +67,17 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-    //Hey Loser, button A starts the motor while button B stops the motor.
+    //Hey zoomer, button A starts the motor while button B stops the motor.
   private void configureButtonBindings() {
     
-    // ***** SHOOTER *****
-    new JoystickButton(m_driveController, Button.kA.value)
-      .whenPressed(new InstantCommand(m_shooter::shoot, m_shooter).beforeStarting(() -> System.out.println("Xbox 'A' Pressed")));
+    // ***** CONTROL PANEL SYSTEM *****
+    new JoystickButton(m_auxiliaryController, 1)
+      .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button 1 Pressed")));
 
-    new JoystickButton(m_driveController, Button.kA.value)
-      .whenReleased(new InstantCommand(m_shooter::stop, m_shooter).beforeStarting(() -> System.out.println("Xbox 'A' Released")));
+    new JoystickButton(m_auxiliaryController, 1)
+      .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button 2 Released")));
+  
 
-
-    // ***** CONTROL PANEL *****
-    new JoystickButton(m_driveController, Button.kX.value)
-      .whenPressed(new InstantCommand(m_cpController::spin, m_cpController).beforeStarting(() -> System.out.println("Xbox 'X' Pressed")));
-
-    new JoystickButton(m_driveController, Button.kX.value)
-      .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Xbox 'X' Released")));
-
-    // ***** DRIVE SYSTEM *****
   }
 
   /**

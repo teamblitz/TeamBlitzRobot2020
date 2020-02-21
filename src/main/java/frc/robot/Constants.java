@@ -77,6 +77,7 @@ public final class Constants {
 
     public static final class OIConstants {
           public static final int kDriveControllerPort = 0;
+          public static final int kAncillaryControlerPort = 1;
     }
 
     public static final class FeederSubsystemConstants {

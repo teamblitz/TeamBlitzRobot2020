@@ -66,8 +66,14 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 	}
 
 	public void periodic() {
-		if (m_colorSensor.getRotations() >=4) {
+		if (m_colorSensor.getRotations() >= 4) {
 			stop();
+		}
+
+		if (m_colorSensor.getStopOnColor() == false) {
+			stop();
+		} else {
+			go();
 		}
 	}
 
@@ -76,8 +82,12 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 		m_Motor.set(ControlMode.PercentOutput, 1.0 * motorVelocity.getDouble(1.0));		
 	}
 
-		public void stop() {
+	public void stop() {
 		m_Motor.set(ControlMode.PercentOutput, 0.0);
+	}
+
+	public void go() {
+		m_Motor.set(ControlMode.PercentOutput, 0.2);
 	}
 }
 	

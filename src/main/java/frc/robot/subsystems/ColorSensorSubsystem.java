@@ -58,8 +58,9 @@ public class ColorSensorSubsystem extends SubsystemBase {
   private String colorStringPrevious;
   private int rotations = 0;
   private int colorCounter = 0;
-  private boolean spinUntillColor = false;
-  private int colorSelector = 2;
+  private boolean spinUntillColor = true;
+  private boolean spinMode = false; //True = spin x rotations & False = spin until x color
+  private int colorSelector = 3;
   private String colorController = "Red";
   private boolean resetRotations = false;
   private NetworkTableEntry resetTheRotations;
@@ -85,6 +86,10 @@ public class ColorSensorSubsystem extends SubsystemBase {
   */
   public boolean getResetRotations() {
     return resetRotations;
+  }
+
+  public boolean getStopOnColor() {
+    return spinUntillColor;
   }
 
   public void periodic() {
@@ -129,12 +134,21 @@ public class ColorSensorSubsystem extends SubsystemBase {
       colorController = "Unknown";
     }
 
-    //Revolution Counter
+
     if (colorString != colorStringPrevious) {
       if (colorString != "Unknown") {
-        if (colorString == colorController) {
-        colorCounter++;
-        spinUntillColor = true;
+        if (spinMode == true) {
+          //Revolution Counter
+          if (colorString == colorController) {
+            colorCounter++;
+          }
+        } else {
+          //Spin Until Color
+          if (colorString == colorController) {
+            spinUntillColor = false;
+          }else{
+            spinUntillColor = true;
+          }
         }
       colorStringPrevious = colorString;
       }
@@ -143,13 +157,6 @@ public class ColorSensorSubsystem extends SubsystemBase {
     if (colorCounter == 2) {
       rotations++;
       colorCounter = 0;
-    }
-
-    //Spin to color
-    if (colorString != colorStringPrevious) {
-      if (colorString == colorController) {
-        spinUntillColor = false;
-      }
     }
 
     if (resetTheRotations.getBoolean(false) == true) {

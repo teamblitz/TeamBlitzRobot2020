@@ -25,4 +25,15 @@ public class FeederSubsystem extends SubsystemBase {
     m_intakeArm.restoreFactoryDefaults();
 
   }
+
+  public void runFeeder() {
+    System.out.println("FeederSubsystem::runFeeder");
+    m_intakeArm.set(0.1);
+  }
+
+  public void stopFeeder() {
+    System.out.println("FeederSubsystem::stopFeeder");
+    m_intakeArm.set(0.0);
+  }
+
 }

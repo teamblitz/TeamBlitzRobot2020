@@ -22,6 +22,16 @@ public class FeederWheelsSubsystem extends SubsystemBase {
 
   }
 
+  public void runFeederWheels() {
+    System.out.println("FeederSubsystem::runFeederWheels");
+    m_intakeRoller.set(0.1);
+  }
+
+  public void stopFeederWheels() {
+    System.out.println("FeederSubsystem::stopFeederWheels");
+    m_intakeRoller.set(0.0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

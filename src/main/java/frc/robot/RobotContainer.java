@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.FeederSubsystemConstants;
+import frc.robot.Constants.FeederWheelsSubsystemConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.ControlPanelControllerSubsystem;
@@ -42,9 +44,15 @@ public class RobotContainer {
   // The driver's controller.
   private final XboxController m_driveController = new XboxController(OIConstants.kDriveControllerPort);
   private final Joystick m_auxiliaryController = new Joystick(OIConstants.kDriveControllerPort);
+  
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
+
+  // IntakeArm and IntakeRoller controller.
+  private final XboxController m_intakeArmController = new XboxController(FeederSubsystemConstants.kSparkMotorPortIntakeArm);
+  private final XboxController m_intakeRollerController = new XboxController(FeederWheelsSubsystemConstants.kSparkMotorPortIntakeRoller);
+
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
@@ -72,12 +80,24 @@ public class RobotContainer {
     
     // ***** CONTROL PANEL SYSTEM *****
     new JoystickButton(m_auxiliaryController, 1)
-      .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button 1 Pressed")));
+      .whenPressed(new InstantCommand(m_cpController::spin, m_cpController).beforeStarting(() -> System.out.println("Joystick Button 1 Pressed")));
 
     new JoystickButton(m_auxiliaryController, 1)
       .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button 2 Released")));
   
+    // ***** FEEDER (IntakeArm) SUBSYSTEM *****
+    new JoystickButton(m_intakeArmController, Button.kA.value)
+      .whenPressed(new InstantCommand(m_intakeArm::runFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Xbox A Button Pressed")));
 
+    new JoystickButton(m_intakeArmController, Button.kA.value)
+      .whenReleased(new InstantCommand(m_intakeArm::stopFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Xbox A Button Released")));
+
+    // ***** FEEDER (IntakeRoller) WHEELS SUBSYSTEM *****
+    new JoystickButton(m_intakeRollerController, Button.kB.value)
+      .whenPressed(new InstantCommand(m_intakeRoller::runFeederWheels, m_intakeRoller).beforeStarting(() -> System.out.println("Xbox B Button Pressed")));
+
+    new JoystickButton(m_intakeRollerController, Button.kB.value)
+      .whenPressed(new InstantCommand(m_intakeRoller::stopFeederWheels, m_intakeRoller).beforeStarting(() -> System.out.println("Xbox B Button Released")));
   }
 
   /**

@@ -15,14 +15,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControlPanelControllerConstants;
 
 public class ControlPanelControllerSubsystem extends SubsystemBase {
-
-	private final String kShuffleboardTabName = "Control Panel";
-	private ShuffleboardTab sbControlPanelTab = Shuffleboard.getTab(kShuffleboardTabName);
 
 	private final TalonSRX m_Motor = new TalonSRX(ControlPanelControllerConstants.kMotorPort);
 

@@ -81,10 +81,10 @@ public final class Constants {
     }
 
     public static final class FeederSubsystemConstants {
-        public static final int kSparkMotorPortIntakeArm = 1;
+        public static final int kSparkMotorPortIntakeArm = 11;
     }
 
     public static final class FeederWheelsSubsystemConstants {
-        public static final int kSparkMotorPortIntakeRoller = 2;
+        public static final int kSparkMotorPortIntakeRoller = 10;
     }
 }

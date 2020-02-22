@@ -83,7 +83,7 @@ public final class Constants {
         // None currently defined.
 
         // Joystick buttons:
-        public static final int kFeederArmToggleButton = 2;
+        public static final int kFeederArmToggleButton = 11;
         public static final int kFeederIntakeToggleButton = 3;
         public static final int kShooterToggleButton = 1;
         public static final int kControlPanelSpinToColorButton = 4;

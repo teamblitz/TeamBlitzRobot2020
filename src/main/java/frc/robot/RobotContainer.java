@@ -21,6 +21,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederArmSubsystem;
 import frc.robot.subsystems.FeederWheelsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.ToggleFeederArmCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -29,6 +30,10 @@ import frc.robot.subsystems.ShooterSubsystem;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+  //Toggle FeederArm
+  private ToggleFeederArmCommand m_feederArmCommand;
+
 
   // Chasis drive subsystem:
   private DriveSubsystem m_robotDrive;
@@ -54,7 +59,11 @@ public class RobotContainer {
    */
 
   public RobotContainer() {
-    
+
+    m_intakeArm = new FeederArmSubsystem();
+    m_feederArmCommand = new ToggleFeederArmCommand(m_intakeArm);
+
+     
     configureSubsystems();
     configureButtonBindings();
 
@@ -77,7 +86,7 @@ public class RobotContainer {
     m_robotDrive = new DriveSubsystem();
 
     m_shooter = new ShooterSubsystem();
-    m_intakeArm = new FeederArmSubsystem();
+    
     m_intakeRoller = new FeederWheelsSubsystem();
   
     m_colorSensor = new ColorSensorSubsystem();
@@ -95,11 +104,16 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // ***** FEEDER ARM SUBSYSTEM *****
-    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
+
+    /*new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
       .whenPressed(new InstantCommand(m_intakeArm::runFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmToggleButton + " Pressed")));
 
     new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
       .whenReleased(new InstantCommand(m_intakeArm::stopFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmToggleButton + " Released")));
+    */
+
+    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
+      .whenPressed(m_feederArmCommand::toggle);
 
     // ***** FEEDER WHEELS SUBSYSTEM *****
     new JoystickButton(m_auxiliaryController, OIConstants.kFeederIntakeToggleButton)

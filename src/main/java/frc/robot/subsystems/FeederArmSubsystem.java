@@ -26,8 +26,14 @@ public class FeederArmSubsystem extends SubsystemBase {
 
   }
 
-  public void runFeeder() {
-    System.out.println("FeederSubsystem::runFeeder");
+  public void downFeeder() {
+    System.out.println("FeederSubsystem::downFeeder");
+    m_intakeArm.set(-0.1);
+  
+  }
+
+  public void upFeeder() {
+    System.out.println("FeederSubsystem::upFeeder");
     m_intakeArm.set(0.1);
   }
 

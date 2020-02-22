@@ -76,8 +76,18 @@ public final class Constants {
     } 
 
     public static final class OIConstants {
-          public static final int kDriveControllerPort = 0;
-          public static final int kAncillaryControlerPort = 1;
+        public static final int kDriveControllerPort = 0;
+        public static final int kAncillaryControlerPort = 1;
+
+        // Xbox buttons:
+        // None currently defined.
+
+        // Joystick buttons:
+        public static final int kFeederArmToggleButton = 2;
+        public static final int kFeederIntakeToggleButton = 3;
+        public static final int kShooterToggleButton = 1;
+        public static final int kControlPanelSpinToColorButton = 4;
+        public static final int kControPanelMultiRotationsButton =  5;
     }
 
     public static final class FeederSubsystemConstants {

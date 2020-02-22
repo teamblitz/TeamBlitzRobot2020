@@ -7,20 +7,20 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.FeederSubsystemConstants;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.FeederSubsystemConstants;
 
 /**
  * Add your docs here.
  */
 
-public class FeederSubsystem extends SubsystemBase {
+public class FeederArmSubsystem extends SubsystemBase {
   CANSparkMax m_intakeArm = new CANSparkMax(FeederSubsystemConstants.kSparkMotorPortIntakeArm, MotorType.kBrushless);
 
-  public FeederSubsystem() {
+  public FeederArmSubsystem() {
 
     m_intakeArm.restoreFactoryDefaults();
 

@@ -10,7 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -24,7 +24,7 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 	private final String kShuffleboardTabName = "Control Panel";
 	private ShuffleboardTab sbControlPanelTab = Shuffleboard.getTab(kShuffleboardTabName);
 
-	private final VictorSPX m_Motor = new VictorSPX(ControlPanelControllerConstants.kMotorPort);
+	private final TalonSRX m_Motor = new TalonSRX(ControlPanelControllerConstants.kMotorPort);
 
 	private NetworkTableEntry motorVelocity = Shuffleboard.getTab("Control Panel")
 		.add("Controller", m_Motor.getSelectedSensorVelocity())

@@ -131,13 +131,13 @@ public class RobotContainer {
     
     // ***** CONTROL PANEL SYSTEM *****
     new JoystickButton(m_auxiliaryController, OIConstants.kControlPanelSpinToColorButton)
-      .whenPressed(new InstantCommand(m_cpController::spin, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControlPanelSpinToColorButton + " Pressed")));
+      .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControlPanelSpinToColorButton + " Pressed")));
 
     new JoystickButton(m_auxiliaryController, OIConstants.kControlPanelSpinToColorButton)
       .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControlPanelSpinToColorButton + " Released")));  
 
       new JoystickButton(m_auxiliaryController, OIConstants.kControPanelMultiRotationsButton)
-      .whenPressed(new InstantCommand(m_cpController::spin, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControPanelMultiRotationsButton + " Pressed")));
+      .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControPanelMultiRotationsButton + " Pressed")));
 
     new JoystickButton(m_auxiliaryController, OIConstants.kControPanelMultiRotationsButton)
       .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControPanelMultiRotationsButton + " Released")));  

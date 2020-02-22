@@ -52,13 +52,9 @@ public class ToggleFeederArmCommand extends CommandBase {
     toggle = !toggle;
     if (toggle) {
       m_subsystem.downFeeder();
-      new WaitCommand(5);
-      m_subsystem.stopFeeder();
     }
     else {
       m_subsystem.upFeeder();
-      new WaitCommand(5);
-      m_subsystem.stopFeeder();
     }
   }
 

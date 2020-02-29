@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -18,25 +19,25 @@ import frc.robot.Constants;
 public class DriveSubsystem extends SubsystemBase {
 
   /* Master Talons */
-  private final WPI_TalonFX m_leftMotor = new WPI_TalonFX(Constants.DriveConstants.kLeftMotorPort);
-  private final WPI_TalonFX m_rightMotor = new WPI_TalonFX(Constants.DriveConstants.kRightMotorPort);
+  private final WPI_TalonFX m_leftMaster = new WPI_TalonFX(Constants.DriveConstants.kLeftMotorPort);
+  private final WPI_TalonFX m_rightMaster = new WPI_TalonFX(Constants.DriveConstants.kRightMotorPort);
   /* Slave Talons */
   private final WPI_TalonFX m_leftSlave = new WPI_TalonFX(Constants.DriveConstants.kLeftSlavePort);
   private final WPI_TalonFX m_rightSlave = new WPI_TalonFX(Constants.DriveConstants.kRightSlavePort);
   
-  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
+  private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
   /**
    * Creates a new DriveSubsystem.
    */
   public DriveSubsystem() {
     /* Factory Default all hardware to prevent unexpected behaviour */
-    m_leftMotor.configFactoryDefault();
-    m_rightMotor.configFactoryDefault();
+    m_leftMaster.configFactoryDefault();
+    m_rightMaster.configFactoryDefault();
     m_leftSlave.configFactoryDefault();
     m_rightSlave.configFactoryDefault();
 
-    m_leftMotor.setNeutralMode(NeutralMode.Brake);
-    m_rightMotor.setNeutralMode(NeutralMode.Brake);
+    m_leftMaster.setNeutralMode(NeutralMode.Brake);
+    m_rightMaster.setNeutralMode(NeutralMode.Brake);
     m_leftSlave.setNeutralMode(NeutralMode.Brake);
     m_rightSlave.setNeutralMode(NeutralMode.Brake);
 
@@ -44,21 +45,21 @@ public class DriveSubsystem extends SubsystemBase {
     * Take our extra motor controllers and have them
     * follow the Talons updated in arcadeDrive 
     */
-    m_leftSlave.follow(m_leftMotor);
-    m_rightSlave.follow(m_rightMotor);
+    m_leftSlave.follow(m_leftMaster);
+    m_rightSlave.follow(m_rightMaster);
 
     /**
     * Drive robot forward and make sure all motors spin the correct way.
     * Toggle booleans accordingly.... 
     */
-    m_leftMotor.setInverted(false); // <<<<<< Adjust this until robot drives forward when stick is forward
-    m_rightMotor.setInverted(true); // <<<<<< Adjust this until robot drives forward when stick is forward
+    m_leftMaster.setInverted(TalonFXInvertType.CounterClockwise);    // <<<<<< Adjust this until robot drives forward when stick is forward
+    m_rightMaster.setInverted(TalonFXInvertType.Clockwise);         // <<<<<< Adjust this until robot drives forward when stick is forward
     m_leftSlave.setInverted(InvertType.FollowMaster);
     m_rightSlave.setInverted(InvertType.FollowMaster);
 
     //Make the motors ramp up slowly
-    m_leftMotor.configOpenloopRamp(1, 10);
-    m_rightMotor.configOpenloopRamp(1, 10);
+    m_leftMaster.configOpenloopRamp(1, 10);
+    m_rightMaster.configOpenloopRamp(1, 10);
     
     /* diff drive assumes (by default) that 
       right side must be negative to move forward.

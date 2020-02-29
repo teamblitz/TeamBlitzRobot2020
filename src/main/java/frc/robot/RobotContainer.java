@@ -60,8 +60,8 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    m_intakeArm = new FeederArmSubsystem();
-    m_feederArmCommand = new ToggleFeederArmCommand(m_intakeArm);
+    // m_intakeArm = new FeederArmSubsystem();
+    // m_feederArmCommand = new ToggleFeederArmCommand(m_intakeArm);
 
      
     configureSubsystems();
@@ -86,7 +86,8 @@ public class RobotContainer {
     m_robotDrive = new DriveSubsystem();
 
     m_shooter = new ShooterSubsystem();
-    
+
+    m_intakeArm = new FeederArmSubsystem();    
     m_intakeRoller = new FeederWheelsSubsystem();
   
     m_colorSensor = new ColorSensorSubsystem();
@@ -105,15 +106,22 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // ***** FEEDER ARM SUBSYSTEM *****
 
-    /*new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
-      .whenPressed(new InstantCommand(m_intakeArm::runFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmToggleButton + " Pressed")));
+    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmDownButton)
+      .whenPressed(new InstantCommand(m_intakeArm::downFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmDownButton + " Pressed")));
 
-    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
-      .whenReleased(new InstantCommand(m_intakeArm::stopFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmToggleButton + " Released")));
-    */
+    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmDownButton)
+      .whenReleased(new InstantCommand(m_intakeArm::stopFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmDownButton + " Released")));
 
-    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
-      .whenPressed(m_feederArmCommand::toggle);
+    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmUpButton)
+      .whenPressed(new InstantCommand(m_intakeArm::upFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmUpButton + " Pressed")));
+
+    new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmUpButton)
+      .whenReleased(new InstantCommand(m_intakeArm::stopFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmUpButton + " Released")));
+
+    // Alternate approach to use a toggle for raise vs lower. For this we would need to set
+    // soft limits or use switches to stop the motor
+    // new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmToggleButton)
+    //   .whenPressed(m_feederArmCommand::toggle);
 
     // ***** FEEDER WHEELS SUBSYSTEM *****
     new JoystickButton(m_auxiliaryController, OIConstants.kFeederIntakeToggleButton)

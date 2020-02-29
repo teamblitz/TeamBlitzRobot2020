@@ -83,7 +83,13 @@ public final class Constants {
         // None currently defined.
 
         // Joystick buttons:
+        // If you enable the toggle command then it will use one button
         public static final int kFeederArmToggleButton = 11;
+        // If you enable the two buttons for down and up you have to use one
+        // for down and one for up
+        public static final int kFeederArmDownButton = 11;
+        public static final int kFeederArmUpButton = 10;
+        
         public static final int kFeederIntakeToggleButton = 3;
         public static final int kShooterToggleButton = 1;
         public static final int kControlPanelSpinToColorButton = 4;

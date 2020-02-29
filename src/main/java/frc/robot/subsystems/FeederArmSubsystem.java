@@ -24,12 +24,20 @@ public class FeederArmSubsystem extends SubsystemBase {
   public FeederArmSubsystem() {
 
     m_intakeArm.restoreFactoryDefaults();
-    
-    m_intakeArm.enableSoftLimit(SoftLimitDirection.kForward, true);
-    m_intakeArm.enableSoftLimit(SoftLimitDirection.kReverse, true);
 
-    m_intakeArm.setSoftLimit(SoftLimitDirection.kReverse, 5);
-    m_intakeArm.setSoftLimit(SoftLimitDirection.kForward, 5);
+    // ISSUE: This was set under 20 amps due to locked rotor testing with sparkmaxes
+    // Time to Failure Summary
+    // 20A Limit - Motor survived full 220s test.
+    // 40A Limit - Motor failure at approximately 27s.
+    // 60A Limit - Motor failure at approximately 5.5s
+    // 80A Limit* - Motor failure at approximately 2.0s
+    m_intakeArm.setSmartCurrentLimit(15);
+    
+    // m_intakeArm.enableSoftLimit(SoftLimitDirection.kForward, true);
+    // m_intakeArm.enableSoftLimit(SoftLimitDirection.kReverse, true);
+
+    // m_intakeArm.setSoftLimit(SoftLimitDirection.kReverse, 5);
+    // m_intakeArm.setSoftLimit(SoftLimitDirection.kForward, 5);
 
   }
 
@@ -41,5 +49,10 @@ public class FeederArmSubsystem extends SubsystemBase {
   public void upFeeder() {
     System.out.println("FeederSubsystem::upFeeder");
     m_intakeArm.set(0.1);
+  }
+
+  public void stopFeeder() {
+    System.out.println("FeederSubsystem::stopFeeder");
+    m_intakeArm.stopMotor();
   }
 }

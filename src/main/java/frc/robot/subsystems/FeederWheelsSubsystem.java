@@ -19,6 +19,13 @@ public class FeederWheelsSubsystem extends SubsystemBase {
   public FeederWheelsSubsystem() {
 
     m_intakeRoller.restoreFactoryDefaults();
+    // ISSUE: This was set under 20 amps due to locked rotor testing with sparkmaxes
+    // Time to Failure Summary
+    // 20A Limit - Motor survived full 220s test.
+    // 40A Limit - Motor failure at approximately 27s.
+    // 60A Limit - Motor failure at approximately 5.5s
+    // 80A Limit* - Motor failure at approximately 2.0s
+    m_intakeRoller.setSmartCurrentLimit(15);
 
   }
 

@@ -69,10 +69,11 @@ public final class Constants {
     }
 
     public static final class DriveConstants {     
-        public static final int kLeftMotorPort = 6;
-        public static final int kRightMotorPort = 8;
-        public static final int kLeftSlavePort = 7;
-        public static final int kRightSlavePort = 9;
+        public static final int kRightMasterPort = 6;
+        public static final int kRightSlavePort = 7;
+
+        public static final int kLeftMasterPort = 8;
+        public static final int kLeftSlavePort = 9;
     } 
 
     public static final class OIConstants {

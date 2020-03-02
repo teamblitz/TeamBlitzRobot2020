@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -67,17 +68,18 @@ public class RobotContainer {
     configureSubsystems();
     configureButtonBindings();
 
+    double kSpeedLimiter = 0.5;
     if (kUseTankDrive) {
       m_robotDrive.setDefaultCommand(
       new RunCommand(() -> m_robotDrive
-        .tankDrive(m_driveController.getY(GenericHID.Hand.kLeft),
-                   m_driveController.getY(GenericHID.Hand.kRight)), m_robotDrive));
+        .tankDrive(m_driveController.getY(GenericHID.Hand.kLeft)*kSpeedLimiter,
+                   m_driveController.getY(GenericHID.Hand.kRight)*kSpeedLimiter), m_robotDrive));
     }
     else {  // arcadeDrive
       m_robotDrive.setDefaultCommand(
           new RunCommand(() -> m_robotDrive
-            .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
-                        m_driveController.getX(GenericHID.Hand.kRight)), m_robotDrive));
+            .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft)*kSpeedLimiter,
+                        m_driveController.getX(GenericHID.Hand.kRight)*kSpeedLimiter), m_robotDrive));
     }                     
   }
 
@@ -104,8 +106,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // ***** FEEDER ARM SUBSYSTEM *****
 
+    // ***** FEEDER ARM SUBSYSTEM *****
     new JoystickButton(m_auxiliaryController, OIConstants.kFeederArmDownButton)
       .whenPressed(new InstantCommand(m_intakeArm::downFeeder, m_intakeArm).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederArmDownButton + " Pressed")));
 
@@ -157,7 +159,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return null;
   }
 }

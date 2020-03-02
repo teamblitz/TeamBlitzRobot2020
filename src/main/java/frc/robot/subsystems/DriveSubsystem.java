@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -19,8 +21,8 @@ import frc.robot.Constants;
 public class DriveSubsystem extends SubsystemBase {
 
   /* Master Talons */
-  private final WPI_TalonFX m_leftMaster = new WPI_TalonFX(Constants.DriveConstants.kLeftMotorPort);
-  private final WPI_TalonFX m_rightMaster = new WPI_TalonFX(Constants.DriveConstants.kRightMotorPort);
+  private final WPI_TalonFX m_leftMaster = new WPI_TalonFX(Constants.DriveConstants.kLeftMasterPort);
+  private final WPI_TalonFX m_rightMaster = new WPI_TalonFX(Constants.DriveConstants.kRightMasterPort);
   /* Slave Talons */
   private final WPI_TalonFX m_leftSlave = new WPI_TalonFX(Constants.DriveConstants.kLeftSlavePort);
   private final WPI_TalonFX m_rightSlave = new WPI_TalonFX(Constants.DriveConstants.kRightSlavePort);
@@ -36,6 +38,30 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftSlave.configFactoryDefault();
     m_rightSlave.configFactoryDefault();
 
+    // Peak and Nominal Output
+    m_leftMaster.configPeakOutputForward(0.8);
+    m_rightMaster.configPeakOutputForward(0.8);
+    // m_leftMaster.configNominalOutputForward(0.1);
+    // m_rightMaster.configNominalOutputForward(0.1);
+
+    // Current Limits
+    // double kStatorCurrentLimit = 35;
+    // double kStatorTriggerThreshold = 40;
+    // double kStatorTriggerThresholdTime = 1.0;
+    // double kSupplyCurrentLimit = 35;
+    // double kSupplyTriggerThreshold = 40;
+    // double kSupplyTriggerThresholdTime = 0.5;
+
+    // m_leftMaster.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kStatorCurrentLimit, kStatorTriggerThreshold, kStatorTriggerThresholdTime));
+    // m_leftMaster.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, kSupplyCurrentLimit, kSupplyTriggerThreshold, kSupplyTriggerThresholdTime));
+    // m_rightMaster.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kStatorCurrentLimit, kStatorTriggerThreshold, kStatorTriggerThresholdTime));
+    // m_rightMaster.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, kSupplyCurrentLimit, kSupplyTriggerThreshold, kSupplyTriggerThresholdTime));
+    // m_leftSlave.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kStatorCurrentLimit, kStatorTriggerThreshold, kStatorTriggerThresholdTime));
+    // m_leftSlave.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, kSupplyCurrentLimit, kSupplyTriggerThreshold, kSupplyTriggerThresholdTime));
+    // m_rightSlave.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kStatorCurrentLimit, kStatorTriggerThreshold, kStatorTriggerThresholdTime));
+    // m_rightSlave.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, kSupplyCurrentLimit, kSupplyTriggerThreshold, kSupplyTriggerThresholdTime));
+
+    // Neutral Mode
     m_leftMaster.setNeutralMode(NeutralMode.Brake);
     m_rightMaster.setNeutralMode(NeutralMode.Brake);
     m_leftSlave.setNeutralMode(NeutralMode.Brake);
@@ -52,14 +78,14 @@ public class DriveSubsystem extends SubsystemBase {
     * Drive robot forward and make sure all motors spin the correct way.
     * Toggle booleans accordingly.... 
     */
-    m_leftMaster.setInverted(TalonFXInvertType.CounterClockwise);    // <<<<<< Adjust this until robot drives forward when stick is forward
-    m_rightMaster.setInverted(TalonFXInvertType.Clockwise);         // <<<<<< Adjust this until robot drives forward when stick is forward
+    m_leftMaster.setInverted(TalonFXInvertType.Clockwise);          // <<<<<< Adjust this until robot drives forward when stick is forward
+    m_rightMaster.setInverted(TalonFXInvertType.CounterClockwise);  // <<<<<< Adjust this until robot drives forward when stick is forward
     m_leftSlave.setInverted(InvertType.FollowMaster);
     m_rightSlave.setInverted(InvertType.FollowMaster);
 
-    //Make the motors ramp up slowly
-    m_leftMaster.configOpenloopRamp(1, 10);
-    m_rightMaster.configOpenloopRamp(1, 10);
+    // Make the motors ramp up slowly.
+    m_leftMaster.configOpenloopRamp(1.0, 10);
+    m_rightMaster.configOpenloopRamp(1.0, 10);
     
     /* diff drive assumes (by default) that 
       right side must be negative to move forward.

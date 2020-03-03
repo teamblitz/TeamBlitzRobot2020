@@ -81,7 +81,8 @@ public final class Constants {
         public static final int kAncillaryControlerPort = 1;
 
         // Xbox buttons:
-        // None currently defined.
+        public static final int kOverdriveLeftTriggerAxis = 2;
+        public static final int kOverdriveRightTriggerAxis = 3;
 
         // Joystick buttons:
         // If you enable the toggle command then it will use one button

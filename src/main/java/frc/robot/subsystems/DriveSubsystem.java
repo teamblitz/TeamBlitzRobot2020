@@ -39,8 +39,8 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightSlave.configFactoryDefault();
 
     // Peak and Nominal Output
-    m_leftMaster.configPeakOutputForward(0.8);
-    m_rightMaster.configPeakOutputForward(0.8);
+    m_leftMaster.configPeakOutputForward(1.0);
+    m_rightMaster.configPeakOutputForward(1.0);
     // m_leftMaster.configNominalOutputForward(0.1);
     // m_rightMaster.configNominalOutputForward(0.1);
 
@@ -67,6 +67,12 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftSlave.setNeutralMode(NeutralMode.Brake);
     m_rightSlave.setNeutralMode(NeutralMode.Brake);
 
+    // Make the motors ramp up slowly.
+    m_leftMaster.configOpenloopRamp(1.0, 10);
+    m_rightMaster.configOpenloopRamp(1.0, 10);
+    
+    // *********** PUT NON-TUNABLE PARAMETERS BELOW THIS LINE **********
+
     /**
     * Take our extra motor controllers and have them
     * follow the Talons updated in arcadeDrive 
@@ -82,10 +88,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightMaster.setInverted(TalonFXInvertType.CounterClockwise);  // <<<<<< Adjust this until robot drives forward when stick is forward
     m_leftSlave.setInverted(InvertType.FollowMaster);
     m_rightSlave.setInverted(InvertType.FollowMaster);
-
-    // Make the motors ramp up slowly.
-    m_leftMaster.configOpenloopRamp(1.0, 10);
-    m_rightMaster.configOpenloopRamp(1.0, 10);
     
     /* diff drive assumes (by default) that 
       right side must be negative to move forward.

@@ -52,11 +52,13 @@ public class RobotContainer {
   private XboxController m_driveController;
   private Joystick m_auxiliaryController;
   
-  // Configuration constants:
+  // Controller Constants:
   private final boolean kUseTankDrive = true;
+  private final double kLowSpeed = 0.5;
+  private final double kFullSpeed = 1.0;
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
 
   public RobotContainer() {
@@ -68,18 +70,19 @@ public class RobotContainer {
     configureSubsystems();
     configureButtonBindings();
 
-    double kSpeedLimiter = 0.5;
     if (kUseTankDrive) {
       m_robotDrive.setDefaultCommand(
       new RunCommand(() -> m_robotDrive
-        .tankDrive(m_driveController.getY(GenericHID.Hand.kLeft)*kSpeedLimiter,
-                   m_driveController.getY(GenericHID.Hand.kRight)*kSpeedLimiter), m_robotDrive));
+        .tankDrive(m_driveController.getY(GenericHID.Hand.kLeft) * (m_driveController.getRawAxis(OIConstants.kOverdriveRightTriggerAxis) < 0.5 ? kLowSpeed : kFullSpeed),
+                   m_driveController.getY(GenericHID.Hand.kRight) * (m_driveController.getRawAxis(OIConstants.kOverdriveRightTriggerAxis) < 0.5 ? kLowSpeed : kFullSpeed)),
+                   m_robotDrive));
     }
     else {  // arcadeDrive
       m_robotDrive.setDefaultCommand(
           new RunCommand(() -> m_robotDrive
-            .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft)*kSpeedLimiter,
-                        m_driveController.getX(GenericHID.Hand.kRight)*kSpeedLimiter), m_robotDrive));
+            .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
+                        m_driveController.getX(GenericHID.Hand.kRight)),
+                        m_robotDrive));
     }                     
   }
 

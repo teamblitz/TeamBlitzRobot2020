@@ -1,3 +1,4 @@
+      // What is in here will not be used until mounted.
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
@@ -55,7 +56,7 @@ public class ColorSensorSubsystem extends SubsystemBase {
   private String colorStringPrevious;
   private int rotations = 0;
   private int colorCounter = 0;
-  private boolean spinUntillColor = true;
+  private boolean spinUntillColor = true; // Spins until color is found
   private boolean spinMode = false; //True = spin x rotations & False = spin until x color
   private int colorSelector = 3;
   private String colorController = "Red";
@@ -166,13 +167,13 @@ public class ColorSensorSubsystem extends SubsystemBase {
      * Open Smart Dashboard or Shuffleboard to see the color detected by the 
      * sensor.
      */
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putNumber("Confidence", match.confidence);
-    SmartDashboard.putString("Detected Color", colorString);
-    SmartDashboard.putNumber("Color Counter", colorCounter);
-    SmartDashboard.putNumber("Rotations", rotations);
-    SmartDashboard.putBoolean("Has color passed", spinUntillColor);
+    SmartDashboard.putNumber("Red", detectedColor.red); //Puts color Red in SmartDashboard
+    SmartDashboard.putNumber("Green", detectedColor.green); //Puts color Green in SmartDashboard
+    SmartDashboard.putNumber("Blue", detectedColor.blue); // Puts color Blue in SmartDashboard
+    SmartDashboard.putNumber("Confidence", match.confidence); // Puts RGB value into SmartDashboard
+    SmartDashboard.putString("Detected Color", colorString); // Puts what color is seen into SmartDashboard
+    SmartDashboard.putNumber("Color Counter", colorCounter); // Puts number of times it has seen the color into SmartDashboard
+    SmartDashboard.putNumber("Rotations", rotations); // Puts number of rotations into SmartDashboard
+    SmartDashboard.putBoolean("Has color passed", spinUntillColor); // Puts what colors have passed into SmartDashboard
   }
 }

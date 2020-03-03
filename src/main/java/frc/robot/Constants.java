@@ -26,11 +26,12 @@ public final class Constants {
         
         public static final int kShooterMotorTopPort = 2;
         public static final int kShooterMotorBottomPort = 3;
-        
+        // Ports the shooters are attatched to.
         
         public static final double kShooterFreeRPS = 5300;
         public static final double kShooterTargetRPS = 4000;
         public static final double kShooterToleranceRPS = 50;
+        // How many rotations per second should be achieved.
         
         // These are not real PID gains, and will have to be tuned for your specific robot.
         public static final double kP = 1;

@@ -16,8 +16,7 @@ import frc.robot.Constants.FeederSubsystemConstants;
 
 /**
  * Add your docs here.
- */
-
+  */
 public class FeederArmSubsystem extends SubsystemBase {
   CANSparkMax m_intakeArm = new CANSparkMax(FeederSubsystemConstants.kSparkMotorPortIntakeArm, MotorType.kBrushless);
 
@@ -31,6 +30,8 @@ public class FeederArmSubsystem extends SubsystemBase {
     // 40A Limit - Motor failure at approximately 27s.
     // 60A Limit - Motor failure at approximately 5.5s
     // 80A Limit* - Motor failure at approximately 2.0s
+    // Advice: Keep at a 20A limit.
+
     m_intakeArm.setSmartCurrentLimit(15);
     
     // m_intakeArm.enableSoftLimit(SoftLimitDirection.kForward, true);

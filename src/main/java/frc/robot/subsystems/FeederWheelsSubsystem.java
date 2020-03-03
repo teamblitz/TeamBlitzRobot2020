@@ -28,12 +28,12 @@ public class FeederWheelsSubsystem extends SubsystemBase {
     m_intakeRoller.setSmartCurrentLimit(15);
 
   }
-
+  // Enables Feeder Wheels
   public void runFeederWheels() {
     System.out.println("FeederSubsystem::runFeederWheels");
     m_intakeRoller.set(0.1);
   }
-
+  // Disable Feeder Wheels
   public void stopFeederWheels() {
     System.out.println("FeederSubsystem::stopFeederWheels");
     m_intakeRoller.set(0.0);

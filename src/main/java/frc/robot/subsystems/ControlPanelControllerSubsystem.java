@@ -40,7 +40,7 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 		m_Motor.configFactoryDefault();
 		m_Motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
 
-		// Configure nominal outputs.
+		// Configure nominal outputs, same values as ShooterSubsystem.java
 		m_Motor.configNominalOutputForward(0, 10);
 		m_Motor.configNominalOutputReverse(0, 10);
 		m_Motor.configPeakOutputForward(1, 10);

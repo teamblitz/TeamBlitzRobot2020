@@ -21,6 +21,7 @@ import frc.robot.subsystems.ControlPanelControllerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederArmSubsystem;
 import frc.robot.subsystems.FeederWheelsSubsystem;
+import frc.robot.subsystems.UpperPulleySubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.ToggleFeederArmCommand;
 
@@ -35,7 +36,6 @@ public class RobotContainer {
   //Toggle FeederArm
   private ToggleFeederArmCommand m_feederArmCommand;
 
-
   // Chasis drive subsystem:
   private DriveSubsystem m_robotDrive;
 
@@ -43,6 +43,9 @@ public class RobotContainer {
   private ShooterSubsystem m_shooter;
   private FeederArmSubsystem m_intakeArm;
   private FeederWheelsSubsystem m_intakeRoller;
+
+  //Upper Pulley Subsystem:
+  private UpperPulleySubsystem m_upperPulley;
 
   // Control panel subsystem:
   private ColorSensorSubsystem m_colorSensor;
@@ -99,6 +102,8 @@ public class RobotContainer {
 
     m_intakeArm = new FeederArmSubsystem();    
     m_intakeRoller = new FeederWheelsSubsystem();
+
+    m_upperPulley = new UpperPulleySubsystem();
   
     m_colorSensor = new ColorSensorSubsystem();
     m_cpController = new ControlPanelControllerSubsystem(m_colorSensor);
@@ -143,16 +148,28 @@ public class RobotContainer {
       .whenPressed(new InstantCommand(m_intakeRoller::stopFeederWheels, m_intakeRoller).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederIntakeToggleButton + " Released")));
     // When Button 3 is released, then it will toggle off the ball feeder. Before it will output "Joystick Button (3) Released"
     
-    // SHOOTER SUBSYSTEM *****
+    // ***** SHOOTER SUBSYSTEM *****
     new JoystickButton(m_auxiliaryController, OIConstants.kShooterToggleButton)
       .whenPressed(new InstantCommand(m_shooter::shoot, m_shooter).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kShooterToggleButton + " Pressed")));
     // When the trigger is pulled (button 1), the shooter will toggle on. Before it will output "Joystick Button (1) Pressed"
     new JoystickButton(m_auxiliaryController, OIConstants.kShooterToggleButton)
-      .whenReleased(new InstantCommand(m_shooter::shoot, m_shooter).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kShooterToggleButton + "  Released")));
-  }
+      .whenReleased(new InstantCommand(m_shooter::shoot, m_shooter).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kShooterToggleButton + "  Released")));  
     // When the trigger is released (button 1) the shooter will toggle off. Before stopping it will output "Joystick Button (1) Released"
 
-
+    // ***** UPPER PULLEY SUBSYSTEM *****
+    new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonUp)
+      .whenPressed(new InstantCommand(m_upperPulley::upPulley, m_upperPulley).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonUp + "Pressed")));
+    //When button 12 (I think it's a button on the left side) is pushed, the pulley will move up
+    new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonUp)
+      .whenReleased(new InstantCommand(m_upperPulley::stopPulley, m_upperPulley).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonUp + "Released")));
+    //When button 12 is released, the pulley will stop moving
+    new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonDown)
+      .whenPressed(new InstantCommand(m_upperPulley::downPulley, m_upperPulley).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonDown + "Pressed")));
+    //When button 13 (Another button on the left, maybe) is pushed, the pulley will move down
+    new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonDown)
+      .whenPressed(new InstantCommand(m_upperPulley::stopPulley, m_upperPulley).beforeStarting (() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonDown + "Released")));
+    //When button 13 is released, the pulley will stop moving
+  }
 
   //   // ***** CONTROL PANEL SYSTEM *****
   //   // This is of no use for Utah Regional. (Probably)

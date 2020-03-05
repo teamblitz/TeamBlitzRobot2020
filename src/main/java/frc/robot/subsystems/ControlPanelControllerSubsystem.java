@@ -46,7 +46,7 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 		m_Motor.configPeakOutputForward(1, 10);
 		m_Motor.configPeakOutputReverse(-1, 10);
 
-		// Configure neutral mode.
+		// Configure neutral mode. Other posible mode:coast
 		m_Motor.setNeutralMode(NeutralMode.Brake);
 
 		// Configure Velocity closed loop gains in slot1.
@@ -59,7 +59,7 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 
 		m_Motor.set(ControlMode.PercentOutput, 0);
 	}
-
+	//Turn color sensor data into motor commands
 	public void periodic() {
 		if (m_colorSensor.getRotations() >= 4) {
 			stop();
@@ -72,15 +72,18 @@ public class ControlPanelControllerSubsystem extends SubsystemBase {
 		}
 	}
 
+	//make the color weel spin
 	public void spin() {	
 		System.out.println("ControlPanelControllerSubsytem::spin");
 		m_Motor.set(ControlMode.PercentOutput, 1.0 * motorVelocity.getDouble(1.0));		
 	}
 
+	//make the color wheel stop spining
 	public void stop() {
 		m_Motor.set(ControlMode.PercentOutput, 0.0);
 	}
 
+	//make the color weel spin
 	public void go() {
 		m_Motor.set(ControlMode.PercentOutput, 0.2);
 	}

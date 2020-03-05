@@ -68,7 +68,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightSlave.setNeutralMode(NeutralMode.Brake);
 
     // Make the motors ramp up slowly.
-    m_leftMaster.configOpenloopRamp(1.0, 10);
+    m_leftMaster.configOpenloopRamp(1.0, 10); //Fisrt numer is the number of seconds it takes to ramp up and don't touch the second
     m_rightMaster.configOpenloopRamp(1.0, 10);
     
     // *********** PUT NON-TUNABLE PARAMETERS BELOW THIS LINE **********

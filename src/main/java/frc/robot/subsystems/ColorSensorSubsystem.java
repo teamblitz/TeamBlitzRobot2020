@@ -58,11 +58,12 @@ public class ColorSensorSubsystem extends SubsystemBase {
   private int colorCounter = 0;
   private boolean spinUntillColor = true; // Spins until color is found
   private boolean spinMode = false; //True = spin x rotations & False = spin until x color
-  private int colorSelector = 3;
+  private int colorSelector = 3; //Decides what color the color wheel will stop at 1=red 2=Blue 3=Green 4=Yellow
   private String colorController = "Red";
   private boolean resetRotations = false;
   private NetworkTableEntry resetTheRotations;
 
+  //Sets up the color sensor
   public ColorSensorSubsystem() {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
@@ -108,6 +109,7 @@ public class ColorSensorSubsystem extends SubsystemBase {
      */
     ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
+    //Detect what color is showing
     if (match.color == kBlueTarget) {
       colorString = "Blue";
     } else if (match.color == kRedTarget) {
@@ -120,6 +122,7 @@ public class ColorSensorSubsystem extends SubsystemBase {
       colorString = "Unknown";
     }
 
+    //Determins what color the robot is looking for
     if (colorSelector == 1) {
       colorController = "Red";
     } else if (colorSelector == 2) {

@@ -24,8 +24,8 @@ public final class Constants {
         // Distance units will be rotations
         1.0 / (double) kEncoderCPR;
         
-        public static final int kShooterMotorTopPort = 2;
-        public static final int kShooterMotorBottomPort = 3;
+        public static final int kShooterMotorTopPort = 5;
+        public static final int kShooterMotorBottomPort = 4;
         // Ports the shooters are attatched to.
         
         public static final double kShooterFreeRPS = 5300;
@@ -92,6 +92,10 @@ public final class Constants {
         // for down and one for up
         public static final int kFeederArmDownButton = 11;
         public static final int kFeederArmUpButton = 10;
+
+        //Works about the same as the kFeederArmSubsystem, not sure if the button IDs used exist though.
+        public static final int kUpperPulleyButtonUp = 12;
+        public static final int kUpperPulleyButtonDown = 13;
         
         public static final int kFeederIntakeToggleButton = 3;
         public static final int kShooterToggleButton = 1;
@@ -105,5 +109,8 @@ public final class Constants {
 
     public static final class FeederWheelsSubsystemConstants {
         public static final int kSparkMotorPortIntakeRoller = 10;
+    }
+    public static final class UpperPulleySubsystemConstants {
+        public static final int kUpperPulleyPort = 3;
     }
 }

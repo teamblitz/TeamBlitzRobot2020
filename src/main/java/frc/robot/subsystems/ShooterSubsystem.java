@@ -107,8 +107,8 @@ public class ShooterSubsystem extends SubsystemBase {
 	*/
 
 
-	m_shooterMotorTop.set(ControlMode.PercentOutput, .86);
-	m_shooterMotorBottom.set(ControlMode.PercentOutput, .82);
+	m_shooterMotorTop.set(ControlMode.PercentOutput, .87);
+	m_shooterMotorBottom.set(ControlMode.PercentOutput, .83);
 
 //m_shooterMotorTop.set(ControlMode.Velocity, 500);
 //m_shooterMotorBottom.set(ControlMode.Velocity, 500);

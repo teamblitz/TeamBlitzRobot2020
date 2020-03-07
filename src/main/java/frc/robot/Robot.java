@@ -33,6 +33,8 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   private XboxController m_driveController;
 
+  private static Timer autoTimer = new Timer();
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -41,7 +43,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    // m_robotContainer = new RobotContainer();
   }
 
   /**
@@ -76,12 +78,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    /*m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }
+    }*/
+    autoTimer.reset();
+    autoTimer.start();
   }
 
   /**
@@ -90,6 +94,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() { 
     // m_autonomousCommand.execute();
+    if (autoTimer.get() < 0.7) {
+      DriveSub.tankDrive(-0.68, -0.68);
+    } else {
+      DriveSub.tankDrive(0, 0);
+      autoTimer.stop();
+    }
+    System.out.println(autoTimer.get());
+
   }
     
     
@@ -99,6 +111,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_robotContainer = new RobotContainer();
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

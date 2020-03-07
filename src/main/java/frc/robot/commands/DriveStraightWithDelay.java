@@ -3,7 +3,7 @@ package org.usfirst.frc.team2083.autocommands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class DriveStraightWithDelay extends CommandBase
+ public class DriveStraightWithDelay extends CommandBase
 {
 	DriveSubsystem driveSubsystem;
 	long	duration;
@@ -36,7 +36,7 @@ public class DriveStraightWithDelay extends CommandBase
 	@Override
 	public void execute() {
 
-		final long Cur_Time = System.currentTimeMillis();
+		 final long Cur_Time = System.currentTimeMillis();
 		if (Cur_Time - startTime < delay) {
 			driveSubsystem.tankDrive(voltage, voltage);
 		}

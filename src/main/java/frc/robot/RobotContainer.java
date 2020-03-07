@@ -183,31 +183,31 @@ public class RobotContainer {
    // new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonDown)
      // .whenReleased(new InstantCommand(m_upperPulley::stopPulley, m_upperPulley).beforeStarting (() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonDown + "Released")));
     //When button 13 is released, the pulley will stop moving
+
+    //   // ***** CONTROL PANEL SYSTEM *****
+    //   // This is of no use for Utah Regional. (Probably)
+    //   new JoystickButton(m_auxiliaryController, OIConstants.kControlPanelSpinToColorButton)
+    //     .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControlPanelSpinToColorButton + " Pressed")));
+
+    //   new JoystickButton(m_auxiliaryController, OIConstants.kControlPanelSpinToColorButton)
+    //     .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControlPanelSpinToColorButton + " Released")));  
+
+    //   new JoystickButton(m_auxiliaryController, OIConstants.kControPanelMultiRotationsButton)
+    //     .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControPanelMultiRotationsButton + " Pressed")));
+
+    //   new JoystickButton(m_auxiliaryController, OIConstants.kControPanelMultiRotationsButton)
+    //     .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControPanelMultiRotationsButton + " Released")));  
+    //
   }
-
-  //   // ***** CONTROL PANEL SYSTEM *****
-  //   // This is of no use for Utah Regional. (Probably)
-  //   new JoystickButton(m_auxiliaryController, OIConstants.kControlPanelSpinToColorButton)
-  //     .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControlPanelSpinToColorButton + " Pressed")));
-
-  //   new JoystickButton(m_auxiliaryController, OIConstants.kControlPanelSpinToColorButton)
-  //     .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControlPanelSpinToColorButton + " Released")));  
-
-  //   new JoystickButton(m_auxiliaryController, OIConstants.kControPanelMultiRotationsButton)
-  //     .whenPressed(new InstantCommand(m_cpController::go, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControPanelMultiRotationsButton + " Pressed")));
-
-  //   new JoystickButton(m_auxiliaryController, OIConstants.kControPanelMultiRotationsButton)
-  //     .whenReleased(new InstantCommand(m_cpController::stop, m_cpController).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kControPanelMultiRotationsButton + " Released")));  
-  // }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-
    public Command getAutonomousCommand() {
-    return new DriveStraightWithDelay(m_robotDrive, 10000, 0.8, 1000);  // duration, voltage, delay 
+    // return new DriveStraightWithDelay(m_robotDrive, 1000, 0.8, 0);  // duration, voltage, delay 
+    return null;
   }
 }
 

@@ -52,7 +52,7 @@ public final class Constants {
             // Distance units will be rotations
             1.0 / (double) kEncoderCPR;
 
-        public static final int kMotorPort = 4;
+        public static final int kMotorPort = 35;
         
         public static final double kFreeRPS = 5300;
         public static final double kTargetRPS = 4000;
@@ -70,10 +70,10 @@ public final class Constants {
     }
 
     public static final class DriveConstants {     
-        public static final int kRightMasterPort = 6;
+        public static final int kRightMasterPort = 8;
         public static final int kRightSlavePort = 7;
 
-        public static final int kLeftMasterPort = 8;
+        public static final int kLeftMasterPort = 6;
         public static final int kLeftSlavePort = 9;
     } 
 
@@ -94,13 +94,16 @@ public final class Constants {
         public static final int kFeederArmUpButton = 10;
 
         //Works about the same as the kFeederArmSubsystem, not sure if the button IDs used exist though.
-        public static final int kUpperPulleyButtonUp = 12;
-        public static final int kUpperPulleyButtonDown = 13;
-        
+        public static final int kStopPulley = 4;
+        public static final int kUpperPulleyButtonUp = 5;
+        public static final int kUpperPulleyButtonDown = 6;
+        public static final int kFeederIntakeToggleBack = 12;
         public static final int kFeederIntakeToggleButton = 3;
+        public static final int kFeederIntakeToggleOff = 4;
         public static final int kShooterToggleButton = 1;
-        public static final int kControlPanelSpinToColorButton = 4;
-        public static final int kControPanelMultiRotationsButton =  5;
+        public static final int kShooterToggleOff = 2;
+       // public static final int kControlPanelSpinToColorButton = 4;
+       // public static final int kControPanelMultiRotationsButton =  5;
     }
 
     public static final class FeederSubsystemConstants {

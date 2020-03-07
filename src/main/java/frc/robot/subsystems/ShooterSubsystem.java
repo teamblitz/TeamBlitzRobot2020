@@ -23,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonSRX m_shooterMotorTop = new TalonSRX(ShooterConstants.kShooterMotorTopPort);
   private final TalonSRX m_shooterMotorBottom = new TalonSRX(ShooterConstants.kShooterMotorBottomPort);
 
-
+/*
   private NetworkTableEntry topMotorVelocity = Shuffleboard.getTab("Controls")
   .add("Top Motor", m_shooterMotorTop.getSelectedSensorVelocity())
 	.withWidget(BuiltInWidgets.kTextView)
@@ -37,7 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
 	.withPosition(2, 0)
 	.withSize(2, 1)
 	.getEntry();
-
+*/
   public ShooterSubsystem() {
 	m_shooterMotorTop.configFactoryDefault();
 	m_shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 10);
@@ -62,7 +62,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
 	// Configure Velocity closed loop gains in slot1.
-	m_shooterMotorTop.config_kF(0, 1023.0/7200.0, 10);
+/*m_shooterMotorTop.config_kF(0, 1023.0/7200.0, 10);
 	m_shooterMotorTop.config_kP(0, 0.25, 10);
 	m_shooterMotorTop.config_kI(0, 0.001, 10);
 	m_shooterMotorTop.config_kD(0, 20, 10);
@@ -71,9 +71,19 @@ public class ShooterSubsystem extends SubsystemBase {
 	m_shooterMotorBottom.config_kP(0, 0.25, 10);
 	m_shooterMotorBottom.config_kI(0, 0.001, 10);
 	m_shooterMotorBottom.config_kD(0, 20, 10);
+*/
+	m_shooterMotorTop.config_kF(0, 0.0, 10);
+	m_shooterMotorTop.config_kP(0, 1, 10);
+	m_shooterMotorTop.config_kI(0, 0, 10);
+	m_shooterMotorTop.config_kD(0, 0 , 10);
 
-	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(20, 10);
-	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
+	m_shooterMotorBottom.config_kF(0, 0.0, 10);
+	m_shooterMotorBottom.config_kP(0, 1, 10);
+	m_shooterMotorBottom.config_kI(0, 0.0, 10);
+	m_shooterMotorBottom.config_kD(0, 0, 10);
+
+	//m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(20, 10);
+	//m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
 
 	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(80, 10);
 	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(80, 10);
@@ -96,7 +106,15 @@ public class ShooterSubsystem extends SubsystemBase {
 	-This is to make sure someone stupid, aka Sean, will not set the motors to a stupidly high or low value.
 	*/
 
-	if (topMotorVelocity.getDouble(1.0) > 2400) {
+
+	m_shooterMotorTop.set(ControlMode.PercentOutput, .86);
+	m_shooterMotorBottom.set(ControlMode.PercentOutput, .82);
+
+//m_shooterMotorTop.set(ControlMode.Velocity, 500);
+//m_shooterMotorBottom.set(ControlMode.Velocity, 500);
+
+
+	/*if (topMotorVelocity.getDouble(1.0) > 2400) {
 		m_shooterMotorTop.set(ControlMode.Velocity, 2400);
 	} else if (topMotorVelocity.getDouble(1.0) < 0) {
 		m_shooterMotorTop.set(ControlMode.Velocity, 0);
@@ -111,13 +129,21 @@ public class ShooterSubsystem extends SubsystemBase {
 	} else {
 		m_shooterMotorBottom.set(ControlMode.Velocity, 1.0 * bottomMotorVelocity.getDouble(1.0));
 	}
-
+	*/
   }
-  public void stop() {
+  public void stopshooter() {
 	System.out.println("ShooterSubsystem::stop");
-	m_shooterMotorTop.set(ControlMode.Velocity, 0.0);
-	m_shooterMotorBottom.set(ControlMode.Velocity, 0.0);
-  }
+
+	//m_shooterMotorTop.set(ControlMode.Velocity, 0);
+	//m_shooterMotorBottom.set(ControlMode.Velocity, 0);
+
+
+	m_shooterMotorTop.set(ControlMode.PercentOutput, 0.0);
+	m_shooterMotorBottom.set(ControlMode.PercentOutput, 0.0);
+	
+
+
+}
 }
 
 	

@@ -39,8 +39,8 @@ public class DriveSubsystem extends SubsystemBase {
     m_rightSlave.configFactoryDefault();
 
     // Peak and Nominal Output
-    m_leftMaster.configPeakOutputForward(1.0);
-    m_rightMaster.configPeakOutputForward(1.0);
+    //m_leftMaster.configPeakOutputForward(1.0);
+    //m_rightMaster.configPeakOutputForward(1.0);
     // m_leftMaster.configNominalOutputForward(0.1);
     // m_rightMaster.configNominalOutputForward(0.1);
 
@@ -62,14 +62,14 @@ public class DriveSubsystem extends SubsystemBase {
     // m_rightSlave.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, kSupplyCurrentLimit, kSupplyTriggerThreshold, kSupplyTriggerThresholdTime));
 
     // Neutral Mode
-    m_leftMaster.setNeutralMode(NeutralMode.Brake);
-    m_rightMaster.setNeutralMode(NeutralMode.Brake);
-    m_leftSlave.setNeutralMode(NeutralMode.Brake);
-    m_rightSlave.setNeutralMode(NeutralMode.Brake);
+    m_leftMaster.setNeutralMode(NeutralMode.Coast);
+    m_rightMaster.setNeutralMode(NeutralMode.Coast);
+    m_leftSlave.setNeutralMode(NeutralMode.Coast);
+    m_rightSlave.setNeutralMode(NeutralMode.Coast);
 
     // Make the motors ramp up slowly.
-    m_leftMaster.configOpenloopRamp(1.0, 10); //Fisrt numer is the number of seconds it takes to ramp up and don't touch the second
-    m_rightMaster.configOpenloopRamp(1.0, 10);
+   // m_leftMaster.configOpenloopRamp(1.0, 10); //Fisrt numer is the number of seconds it takes to ramp up and don't touch the second
+   // m_rightMaster.configOpenloopRamp(1.0, 10);
     
     // *********** PUT NON-TUNABLE PARAMETERS BELOW THIS LINE **********
 
@@ -107,11 +107,11 @@ public class DriveSubsystem extends SubsystemBase {
    * @param fwd the commanded forward movement
    * @param rot the commanded rotation
    */
-  public void arcadeDrive(final double fwd, final double rot) {
+ /* public void arcadeDrive(final double fwd, final double rot) {
     System.out.println("arcadeDrive");
     m_drive.arcadeDrive(fwd, rot);
   }
-
+  */
   public void tankDrive(final double leftSpeed, final double rightSpeed) {
     System.out.println("i am speed");
     m_drive.tankDrive(leftSpeed, rightSpeed);

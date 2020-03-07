@@ -7,9 +7,17 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+import frc.robot.subsystems.DriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,8 +27,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  
+  public static final DriveSubsystem DriveSub = new DriveSubsystem();
+  private DriveSubsystem m_robotDrive;
   private RobotContainer m_robotContainer;
+  private XboxController m_driveController;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -66,7 +77,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -77,8 +88,14 @@ public class Robot extends TimedRobot {
    * This function is called periodically during autonomous.
    */
   @Override
-  public void autonomousPeriodic() {
+  public void autonomousPeriodic() { 
+    // m_autonomousCommand.execute();
   }
+    
+    
+
+    
+  
 
   @Override
   public void teleopInit() {
@@ -86,6 +103,7 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    //m_robotContainer = new RobotContainer();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -96,6 +114,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+   
+      // .tankDrive(m_driveController.getRawAxis(1), m_driveController.getRawAxis(2));
+       
+                   
   }
 
   @Override

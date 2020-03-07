@@ -8,9 +8,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FeederSubsystemConstants;
 
@@ -49,8 +47,9 @@ public class FeederArmSubsystem extends SubsystemBase {
 
   public void upFeeder() {
     System.out.println("FeederSubsystem::upFeeder");
-    m_intakeArm.set(0.1);
+    m_intakeArm.set(0.15);
   }
+  
 
   public void stopFeeder() {
     System.out.println("FeederSubsystem::stopFeeder");

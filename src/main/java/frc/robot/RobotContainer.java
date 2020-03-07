@@ -7,23 +7,24 @@
 
 package frc.robot;
 
+import org.usfirst.frc.team2083.autocommands.DriveStraightWithDelay;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+
 import frc.robot.subsystems.ColorSensorSubsystem;
 import frc.robot.subsystems.ControlPanelControllerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.FeederArmSubsystem;
 import frc.robot.subsystems.FeederWheelsSubsystem;
-import frc.robot.subsystems.UpperPulleySubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.commands.ToggleFeederArmCommand;
+import frc.robot.subsystems.UpperPulleySubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -34,7 +35,7 @@ import frc.robot.commands.ToggleFeederArmCommand;
 public class RobotContainer {
 
   //Toggle FeederArm
-  private ToggleFeederArmCommand m_feederArmCommand;
+  
 
   // Chasis drive subsystem:
   private DriveSubsystem m_robotDrive;
@@ -76,24 +77,34 @@ public class RobotContainer {
     configureButtonBindings();
     // Tank drive
     if (kUseTankDrive) {
-      m_robotDrive.setDefaultCommand(
-      new RunCommand(() -> m_robotDrive
-        .tankDrive(m_driveController.getY(GenericHID.Hand.kLeft) * (m_driveController.getRawAxis(OIConstants.kOverdriveRightTriggerAxis) < 0.5 ? kLowSpeed : kFullSpeed),
+     /* m_robotDrive.setDefaultCommand(
+     new RunCommand(() -> m_robotDrive
+      .tankDrive(m_driveController.getY(GenericHID.Hand.kLeft) * (m_driveController.getRawAxis(OIConstants.kOverdriveRightTriggerAxis) < 0.5 ? kLowSpeed : kFullSpeed),
                   //Get y value of left analog stick. Then set the motor speed to a max of 50% when the left trigger is less then half pulled otherwise set the max speed to 100%
                    m_driveController.getY(GenericHID.Hand.kRight) * (m_driveController.getRawAxis(OIConstants.kOverdriveRightTriggerAxis) < 0.5 ? kLowSpeed : kFullSpeed)),
                    m_robotDrive));
                    //Get y value of right analog stick. Then set the mmotor speed to a max of 50% when the left trigger is less than half pulled otherwise set the max speed to 100%
-    }
+    */
+   
+    m_robotDrive.setDefaultCommand(
+     new RunCommand(() -> m_robotDrive
+      .tankDrive((m_driveController.getRawAxis(1)),
+                  //Get y value of left analog stick. Then set the motor speed to a max of 50% when the left trigger is less then half pulled otherwise set the max speed to 100%
+                   m_driveController.getRawAxis(5)),
+                   m_robotDrive));
+     // .tankDrive(m_driveController.getRawAxis(1), m_driveController.getRawAxis(2));
+      
+                  }
     
-    else { //arcadeDrive (delete what is in these paranthesis and uncomment the arcadeDrive so you would be left with: arcadeDrive)
+    /* else { //arcadeDrive (delete what is in these paranthesis and uncomment the arcadeDrive so you would be left with: arcadeDrive)
       m_robotDrive.setDefaultCommand(
           new RunCommand(() -> m_robotDrive
             .arcadeDrive(m_driveController.getY(GenericHID.Hand.kLeft),
                         m_driveController.getX(GenericHID.Hand.kRight)),
                         m_robotDrive));
     }                     
-  }
-
+  }*/
+}
   private void configureSubsystems() {
 
     m_robotDrive = new DriveSubsystem();
@@ -109,7 +120,7 @@ public class RobotContainer {
     m_cpController = new ControlPanelControllerSubsystem(m_colorSensor);
   
     m_driveController = new XboxController(OIConstants.kDriveControllerPort);
-    m_auxiliaryController = new Joystick(OIConstants.kDriveControllerPort);
+    m_auxiliaryController = new Joystick(OIConstants.kAncillaryControlerPort);
   }
 
 
@@ -144,16 +155,17 @@ public class RobotContainer {
     new JoystickButton(m_auxiliaryController, OIConstants.kFeederIntakeToggleButton)
       .whenPressed(new InstantCommand(m_intakeRoller::runFeederWheels, m_intakeRoller).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederIntakeToggleButton + " Pressed")));
     // When Button 3 is held then it will toggle on the ball feeder. Before it will output "Joystick Button (3) Pressed"
-    new JoystickButton(m_auxiliaryController, OIConstants.kFeederIntakeToggleButton)
+    new JoystickButton(m_auxiliaryController, OIConstants.kFeederIntakeToggleOff)
       .whenPressed(new InstantCommand(m_intakeRoller::stopFeederWheels, m_intakeRoller).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederIntakeToggleButton + " Released")));
     // When Button 3 is released, then it will toggle off the ball feeder. Before it will output "Joystick Button (3) Released"
-    
+    new JoystickButton(m_auxiliaryController, OIConstants.kFeederIntakeToggleBack)
+      .whenPressed(new InstantCommand(m_intakeRoller::runFeederWheelsback, m_intakeRoller).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kFeederIntakeToggleButton + " Pressed")));
     // ***** SHOOTER SUBSYSTEM *****
     new JoystickButton(m_auxiliaryController, OIConstants.kShooterToggleButton)
       .whenPressed(new InstantCommand(m_shooter::shoot, m_shooter).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kShooterToggleButton + " Pressed")));
     // When the trigger is pulled (button 1), the shooter will toggle on. Before it will output "Joystick Button (1) Pressed"
-    new JoystickButton(m_auxiliaryController, OIConstants.kShooterToggleButton)
-      .whenReleased(new InstantCommand(m_shooter::shoot, m_shooter).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kShooterToggleButton + "  Released")));  
+    new JoystickButton(m_auxiliaryController, OIConstants.kShooterToggleOff)
+      .whenReleased(new InstantCommand(m_shooter::stopshooter, m_shooter).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kShooterToggleButton + "  Released")));  
     // When the trigger is released (button 1) the shooter will toggle off. Before stopping it will output "Joystick Button (1) Released"
 
     // ***** UPPER PULLEY SUBSYSTEM *****
@@ -165,9 +177,11 @@ public class RobotContainer {
     //When button 12 is released, the pulley will stop moving
     new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonDown)
       .whenPressed(new InstantCommand(m_upperPulley::downPulley, m_upperPulley).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonDown + "Pressed")));
-    //When button 13 (Another button on the left, maybe) is pushed, the pulley will move down
     new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonDown)
-      .whenPressed(new InstantCommand(m_upperPulley::stopPulley, m_upperPulley).beforeStarting (() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonDown + "Released")));
+      .whenReleased(new InstantCommand(m_upperPulley::stopPulley, m_upperPulley).beforeStarting(() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonUp + "Released")));
+    //When button 13 (Another button on the left, maybe) is pushed, the pulley will move down
+   // new JoystickButton(m_auxiliaryController, OIConstants.kUpperPulleyButtonDown)
+     // .whenReleased(new InstantCommand(m_upperPulley::stopPulley, m_upperPulley).beforeStarting (() -> System.out.println("Joystick Button " + OIConstants.kUpperPulleyButtonDown + "Released")));
     //When button 13 is released, the pulley will stop moving
   }
 
@@ -193,7 +207,7 @@ public class RobotContainer {
    */
 
    public Command getAutonomousCommand() {
-    return null;
+    return new DriveStraightWithDelay(m_robotDrive, 10000, 0.8, 1000);  // duration, voltage, delay 
   }
 }
 

@@ -31,7 +31,10 @@ public class FeederWheelsSubsystem extends SubsystemBase {
   // Enables Feeder Wheels
   public void runFeederWheels() {
     System.out.println("FeederSubsystem::runFeederWheels");
-    m_intakeRoller.set(0.1);
+    m_intakeRoller.set(-0.5);
+  }
+  public void runFeederWheelsback(){
+    m_intakeRoller.set(0.5);
   }
   // Disable Feeder Wheels
   public void stopFeederWheels() {

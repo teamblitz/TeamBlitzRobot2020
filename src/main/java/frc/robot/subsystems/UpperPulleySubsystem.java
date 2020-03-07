@@ -49,12 +49,12 @@ public class UpperPulleySubsystem extends SubsystemBase {
   
   public void upPulley() {
     System.out.println("UpperPulleySubsystem::Up");
-    m_upperPulleyMotor.set(ControlMode.PercentOutput, 0.3);
+    m_upperPulleyMotor.set(ControlMode.PercentOutput, 0.45);
   }
 
   public void downPulley() {
     System.out.println("UpperPulleySubsystem::Down");
-    m_upperPulleyMotor.set(ControlMode.PercentOutput, -0.3);
+    m_upperPulleyMotor.set(ControlMode.PercentOutput, -0.45);
   }
 
   public void stopPulley() {

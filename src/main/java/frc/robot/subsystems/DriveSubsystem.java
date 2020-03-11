@@ -71,6 +71,7 @@ public class DriveSubsystem extends SubsystemBase {
    // m_leftMaster.configOpenloopRamp(1.0, 10); //Fisrt numer is the number of seconds it takes to ramp up and don't touch the second
    // m_rightMaster.configOpenloopRamp(1.0, 10);
     
+    
     // *********** PUT NON-TUNABLE PARAMETERS BELOW THIS LINE **********
 
     /**
@@ -114,6 +115,7 @@ public class DriveSubsystem extends SubsystemBase {
   */
   public void tankDrive(final double leftSpeed, final double rightSpeed) {
     System.out.println("i am speed");
+    // Instead of calling tankDrive, call set(ControlMode.Velocity, ...) on each master motor directly. 
     m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 }

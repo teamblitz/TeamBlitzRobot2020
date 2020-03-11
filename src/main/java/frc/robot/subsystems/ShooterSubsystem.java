@@ -51,10 +51,11 @@ public class ShooterSubsystem extends SubsystemBase {
 	m_shooterMotorTop.configPeakOutputForward(1, 10);
 	m_shooterMotorTop.configPeakOutputReverse(-1, 10);
 
-	m_shooterMotorBottom.configNominalOutputForward(0, 10);
-	m_shooterMotorBottom.configNominalOutputReverse(0, 10);
+	m_shooterMotorBottom.configNominalOutputForward(0, 50);
+	m_shooterMotorBottom.configNominalOutputReverse(0, 25);
 	m_shooterMotorBottom.configPeakOutputForward(1, 10);
 	m_shooterMotorBottom.configPeakOutputReverse(-1, 10);
+	m_shooterMotorBottom.setSensorPhase(true);
 
 	// Configure neutral mode.
 	m_shooterMotorTop.setNeutralMode(NeutralMode.Brake);
@@ -85,8 +86,8 @@ public class ShooterSubsystem extends SubsystemBase {
 	//m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(20, 10);
 	//m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(20, 10);
 
-	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(80, 10);
-	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(80, 10);
+	m_shooterMotorTop.configPulseWidthPeriod_EdgesPerRot(1024, 10);
+	m_shooterMotorBottom.configPulseWidthPeriod_EdgesPerRot(1024, 10);
 
 	m_shooterMotorTop.set(ControlMode.Velocity, 0);
 	m_shooterMotorBottom.set(ControlMode.Velocity, 0);
@@ -107,11 +108,11 @@ public class ShooterSubsystem extends SubsystemBase {
 	*/
 
 
-	m_shooterMotorTop.set(ControlMode.PercentOutput, .87);
-	m_shooterMotorBottom.set(ControlMode.PercentOutput, .83);
+	//m_shooterMotorTop.set(ControlMode.PercentOutput, .88);
+	//m_shooterMotorBottom.set(ControlMode.PercentOutput, .83);
 
-//m_shooterMotorTop.set(ControlMode.Velocity, 500);
-//m_shooterMotorBottom.set(ControlMode.Velocity, 500);
+	m_shooterMotorTop.set(ControlMode.Velocity, 500);
+	m_shooterMotorBottom.set(ControlMode.Velocity, 500);
 
 
 	/*if (topMotorVelocity.getDouble(1.0) > 2400) {
@@ -134,12 +135,12 @@ public class ShooterSubsystem extends SubsystemBase {
   public void stopshooter() {
 	System.out.println("ShooterSubsystem::stop");
 
-	//m_shooterMotorTop.set(ControlMode.Velocity, 0);
-	//m_shooterMotorBottom.set(ControlMode.Velocity, 0);
+	m_shooterMotorTop.set(ControlMode.Velocity, 0);
+	m_shooterMotorBottom.set(ControlMode.Velocity, 0);
 
 
-	m_shooterMotorTop.set(ControlMode.PercentOutput, 0.0);
-	m_shooterMotorBottom.set(ControlMode.PercentOutput, 0.0);
+//	m_shooterMotorTop.set(ControlMode.PercentOutput, 0.0);
+//	m_shooterMotorBottom.set(ControlMode.PercentOutput, 0.0);
 	
 
 

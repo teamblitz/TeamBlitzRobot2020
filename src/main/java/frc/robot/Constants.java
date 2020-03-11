@@ -91,7 +91,7 @@ public final class Constants {
         // If you enable the two buttons for down and up you have to use one
         // for down and one for up
         public static final int kFeederArmDownButton = 11;
-        public static final int kFeederArmUpButton = 10;
+        public static final int kFeederArmUpButton = 9;
 
         //Works about the same as the kFeederArmSubsystem, not sure if the button IDs used exist though.
         public static final int kStopPulley = 4;
